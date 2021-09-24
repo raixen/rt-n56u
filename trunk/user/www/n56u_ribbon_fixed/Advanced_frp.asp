@@ -146,7 +146,7 @@ function done_validating(action){
 							<div class="round_bottom">
 								<div class="row-fluid">
 									<div id="tabMenu" class="submenuBlock"></div>
-									<div class="alert alert-info" style="margin: 10px;">frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。
+									<div class="alert alert-info" style="margin: 10px;"><a href="https://gofrp.org/docs/reference/" target="blank">frp </a>是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。
 									</div>
 
 									<table width="100%" align="center" cellpadding="4" cellspacing="0" class="table">
