@@ -9,9 +9,9 @@ mkdir -p /tmp/frp
 cat > "/tmp/frp/myfrpc.ini" <<-\EOF
 # ==========客户端配置：==========
 [common]
-server_addr = 211.10.10.1
+server_addr = 1.2.3.4
 server_port = 7000
-token = 12345
+token = 123456
 
 #log_file = /tmp/frpc.log
 #log_level = info
@@ -39,7 +39,7 @@ dashboard_port = 7500
 dashboard_user = admin
 dashboard_pwd = admin
 vhost_http_port = 88
-token = 12345
+token = 123456
 subdomain_host = frps.com
 max_pool_count = 50
 #log_file = /tmp/frps.log
@@ -58,8 +58,8 @@ if [ "$frpc_enable" = "1" ] ; then
 	frpc_bin="/usr/bin/frpc"
 	if [ ! -f "$frpc_bin" ]; then
 		if [ ! -f "/tmp/frp/frpc" ];then
-			wget -c -P /tmp/frp https://raw.fastgit.org/etion2008/aaron/raw/main/frpc/frpc
-			#wget -c -P /tmp/frp https://github.com/etion2008/aaron/raw/main/frpc/frpc
+			wget -c -P /tmp/frp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frpc
+			#wget -c -P /tmp/frp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frpc
 			if [ ! -f "/tmp/frp/frpc" ]; then
 				logger -t "FRPC" "frpc二进制文件下载失败，可能是地址失效或者网络异常！"
 				nvram set frpc_enable=0
@@ -81,8 +81,8 @@ if [ "$frps_enable" = "1" ] ; then
 	frps_bin="/usr/bin/frps"
 	if [ ! -f "$frps_bin" ]; then
 		if [ ! -f "/tmp/frp/frps" ];then
-			wget -c -P /tmp/frp https://raw.fastgit.org/etion2008/aaron/raw/main/frps/frps
-			#wget -c -P /tmp/frp https://github.com/etion2008/aaron/raw/main/frps/frps
+			wget -c -P /tmp/frp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frps
+			#wget -c -P /tmp/frp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frps
 			if [ ! -f "/tmp/frp/frps" ]; then
 				logger -t "FRPS" "frps二进制文件下载失败，可能是地址失效或者网络异常！"
 				nvram set frps_enable=0
