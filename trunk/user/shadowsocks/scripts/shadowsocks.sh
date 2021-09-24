@@ -40,8 +40,8 @@ find_bin() {
 	ssr) ret="/usr/bin/ssr-redir" ;;
 	ssr-local) ret="/usr/bin/ssr-local" ;;
 	ssr-server) ret="/usr/bin/ssr-server" ;;
-	v2ray) ret="/usr/bin/v2ray" ;;
-	xray) ret="/usr/bin/v2ray" ;;
+	v2ray) ret="/tmp/v2ray" ;;
+	xray) ret="/tmp/v2ray" ;;
 	trojan) ret="/usr/bin/trojan" ;;
 	socks5) ret="/usr/bin/ipt2socks" ;;
 	esac
@@ -77,14 +77,14 @@ local type=$stype
 		fi
 		;;
 	v2ray)
-		v2_bin="/tmp/bin/v2ray"
-		wget -c -P /tmp/bin https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
-		if [ ! -f "/tmp/bin/v2ray" ]; then
+		v2_bin="/tmp/v2ray"
+		wget -c -P /tmp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
+		if [ ! -f "/tmp/v2ray" ]; then
             logger -t "V2ray" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！请稍后重试"
-            wget -c -P /tmp/bin https://github.com/etion2008/rt-n56u/raw/master/trunk/user/v2ray/v2ray
+            wget -c -P /tmp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/v2ray/v2ray
         else
             logger -t "V2ray" "v2ray二进制文件下载成功"
-            chmod -R 777 /tmp/bin/v2ray
+            chmod -R 777 /tmp/v2ray
         fi
 		v2ray_enable=1
 		if [ "$2" = "1" ]; then
@@ -96,14 +96,14 @@ local type=$stype
 		fi
 		;;
 	xray)
-		v2_bin="/tmp/bin/v2ray"
-		wget -c -P /tmp/bin https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
-		if [ ! -f "/tmp/bin/v2ray" ]; then
+		v2_bin="/tmp/v2ray"
+		wget -c -P /tmp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
+		if [ ! -f "/tmp/v2ray" ]; then
             logger -t "V2ray" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！请稍后重试"
-            wget -c -P /tmp/bin https://github.com/etion2008/rt-n56u/raw/master/trunk/user/v2ray/v2ray
+            wget -c -P /tmp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/v2ray/v2ray
         else
             logger -t "V2ray" "v2ray二进制文件下载成功"
-            chmod -R 777 /tmp/bin/v2ray
+            chmod -R 777 /tmp/v2ray
         fi
 		v2ray_enable=1
 		if [ "$2" = "1" ]; then
