@@ -78,7 +78,7 @@ local type=$stype
 		;;
 	v2ray)
 		v2_bin="/tmp/v2ray"
-		wget -c -P /tmp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
+		[ ! -f "/tmp/v2ray" ] && wget -c -P /tmp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
 		if [ ! -f "/tmp/v2ray" ]; then
             logger -t "V2ray" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！请稍后重试"
             wget -c -P /tmp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/v2ray/v2ray
@@ -97,7 +97,7 @@ local type=$stype
 		;;
 	xray)
 		v2_bin="/tmp/v2ray"
-		wget -c -P /tmp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
+		[ ! -f "/tmp/v2ray" ] && wget -c -P /tmp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/v2ray/v2ray
 		if [ ! -f "/tmp/v2ray" ]; then
             logger -t "V2ray" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！请稍后重试"
             wget -c -P /tmp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/v2ray/v2ray
