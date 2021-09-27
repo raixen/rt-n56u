@@ -329,8 +329,8 @@ EOF
 	fi
 
 	# create inet-state script
-	if [ ! -f "$script_inets" ] ; then
-		cat > "$script_inets" <<EOF
+	if [ ! -n "$script_inets" ] ; then
+		cat > "$script_inets" <<EOE
 #!/bin/sh
 #/etc/storage/inet_state_script.sh
 ### Custom user script
@@ -639,13 +639,13 @@ fi
 logger -t "【连接AP】" "脚本完成"
 
 
-EOF
+EOE
 		chmod 755 "$script_inets"
 	fi
 
 	# create ap_script script
 	if [ ! -f "$script_aps" ] ; then
-		cat > "$script_aps" <<EOF
+		cat > "$script_aps" <<END
 #!/bin/sh
 #/etc/storage/ap_script.sh
 #copyright by hiboy
@@ -737,7 +737,7 @@ else
 fi
 
 
-EOF
+END
 		chmod 755 "$script_aps"
 	fi
 
