@@ -329,8 +329,8 @@ EOF
 	fi
 
 	# create inet-state script
-	if [ ! -n "$script_inets" ] ; then
-		cat > "$script_inets" <<EOE
+	if [ ! -f "$script_inets" ] ; then
+		cat > "$script_inets" <<-'EOE'
 #!/bin/sh
 #/etc/storage/inet_state_script.sh
 ### Custom user script
@@ -645,7 +645,7 @@ EOE
 
 	# create ap_script script
 	if [ ! -f "$script_aps" ] ; then
-		cat > "$script_aps" <<END
+		cat > "$script_aps" <<-'END'
 #!/bin/sh
 #/etc/storage/ap_script.sh
 
