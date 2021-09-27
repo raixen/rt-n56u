@@ -912,7 +912,7 @@ struct nvram_pair router_defaults[] = {
 	{ "controlrate_multicast", "0" },
 	{ "controlrate_broadcast", "10" },
 
-	{ "di_poll_mode", "0" },
+	{ "di_poll_mode", "1" },
 	{ "di_timeout", "2" },
 	{ "di_time_done", "30" },
 	{ "di_time_fail", "5" },
