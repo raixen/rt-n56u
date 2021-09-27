@@ -34,11 +34,11 @@ function initial(){
 	document.form.wl_channel.remove(0);
 
 	if (typeof(support_5g_wid) === 'function'){
-		wid = support_5g_wid();
-		if (wid==7915){
-			document.form.wl_mode_x.remove(1);
-			document.form.wl_mode_x.remove(1);
-		}
+	wid = support_5g_wid();
+	if (wid==7915){
+	document.form.wl_mode_x.remove(1);
+	document.form.wl_mode_x.remove(1);
+	}
 	}
 
 	showLANIPList();
@@ -54,30 +54,30 @@ function initial(){
 function applyRule(){
 	var m = document.form.wl_mode_x.value;
 	if (validForm()){
-		showLoading();
-		if (m == "1" || m == "2")
-			document.form.action_mode.value = " Restart ";
-		else
-			document.form.action_mode.value = " Apply ";
-		document.form.current_page.value = "/Advanced_WMode_Content.asp";
-		document.form.next_page.value = "";
-		document.form.submit();
+	showLoading();
+	if (m == "1" || m == "2")
+	document.form.action_mode.value = " Restart ";
+	else
+	document.form.action_mode.value = " Apply ";
+	document.form.current_page.value = "/Advanced_WMode_Content.asp";
+	document.form.next_page.value = "";
+	document.form.submit();
 	}
 }
 
 function validForm(){
 	var m = document.form.wl_mode_x.value;
 	if (m == "3" || m == "4") {
-		if(!validate_string_ssid(document.form.wl_sta_ssid))
-			return false;
-		if(document.form.wl_sta_ssid.value == "") {
-			document.form.wl_sta_ssid.focus();
-			return false;
-		}
-		if(document.form.wl_sta_auth_mode.value == "psk"){
-			if(!validate_psk(document.form.wl_sta_wpa_psk))
-				return false;
-		}
+	if(!validate_string_ssid(document.form.wl_sta_ssid))
+	return false;
+	if(document.form.wl_sta_ssid.value == "") {
+	document.form.wl_sta_ssid.focus();
+	return false;
+	}
+	if(document.form.wl_sta_auth_mode.value == "psk"){
+	if(!validate_psk(document.form.wl_sta_wpa_psk))
+	return false;
+	}
 	}
 	return true;
 }
@@ -88,14 +88,14 @@ function done_validating(action){
 
 function wds_scan(){
 	$j.ajax({
-		url: '/wds_aplist.asp',
-		dataType: 'script',
-		error: function(xhr){
-			setTimeout("wds_scan();", 1000);
-		},
-		success: function(response){
-			showLANIPList();
-		}
+	url: '/wds_aplist.asp',
+	dataType: 'script',
+	error: function(xhr){
+	setTimeout("wds_scan();", 1000);
+	},
+	success: function(response){
+	showLANIPList();
+	}
 	});
 }
 
@@ -109,14 +109,14 @@ function change_wireless_bridge(){
 	var is_apc_auto = 0;
 
 	if (is_wds){
-		if (document.form.wl_wdsapply_x.value == "1")
-			is_wds_list = 1;
+	if (document.form.wl_wdsapply_x.value == "1")
+	is_wds_list = 1;
 	}
 
 	if (is_apc){
-		is_apc_auto = 1;
-		if (!get_ap_mode())
-			is_apc_wisp = 1;
+	is_apc_auto = 1;
+	if (!get_ap_mode())
+	is_apc_wisp = 1;
 	}
 
 	inputCtrl(document.form.wl_channel, !is_apo);
@@ -147,9 +147,9 @@ function change_wireless_bridge(){
 function change_wdsapply(){
 	var m = document.form.wl_mode_x.value;
 	if (m == "1" || m == "2"){
-		var v = (document.form.wl_wdsapply_x.value == "1") ? 1 : 0;
-		showhide_div("row_wds_2", v);
-		showhide_div("row_wds_apc", v);
+	var v = (document.form.wl_wdsapply_x.value == "1") ? 1 : 0;
+	showhide_div("row_wds_2", v);
+	showhide_div("row_wds_apc", v);
 	}
 }
 
@@ -157,24 +157,24 @@ function change_sta_auth_mode(mflag){
 	var mode = document.form.wl_sta_auth_mode.value;
 	var opts = document.form.wl_sta_auth_mode.options;
 	if(mode == "psk"){
-		inputCtrl(document.form.wl_sta_crypto, 1);
-		inputCtrl(document.form.wl_sta_wpa_psk, 1);
-		if(opts[opts.selectedIndex].text == "WPA2-Personal"){
-			if (mflag == 1){
-				document.form.wl_sta_crypto.options[0].selected = 0;
-				document.form.wl_sta_crypto.options[1].selected = 1;
-				document.form.wl_sta_wpa_mode.value = "2";
-			}
-		}else{
-			if (mflag == 1){
-				document.form.wl_sta_crypto.options[1].selected = 0;
-				document.form.wl_sta_crypto.options[0].selected = 1;
-				document.form.wl_sta_wpa_mode.value = "1";
-			}
-		}
+	inputCtrl(document.form.wl_sta_crypto, 1);
+	inputCtrl(document.form.wl_sta_wpa_psk, 1);
+	if(opts[opts.selectedIndex].text == "WPA2-Personal"){
+	if (mflag == 1){
+	document.form.wl_sta_crypto.options[0].selected = 0;
+	document.form.wl_sta_crypto.options[1].selected = 1;
+	document.form.wl_sta_wpa_mode.value = "2";
+	}
 	}else{
-		inputCtrl(document.form.wl_sta_crypto, 0);
-		inputCtrl(document.form.wl_sta_wpa_psk, 0);
+	if (mflag == 1){
+	document.form.wl_sta_crypto.options[1].selected = 0;
+	document.form.wl_sta_crypto.options[0].selected = 1;
+	document.form.wl_sta_wpa_mode.value = "1";
+	}
+	}
+	}else{
+	inputCtrl(document.form.wl_sta_crypto, 0);
+	inputCtrl(document.form.wl_sta_wpa_psk, 0);
 	}
 }
 
@@ -187,11 +187,11 @@ function setClientIP(num){
 	var smac = wds_aplist[num][1].split(":");
 	var mode = document.form.wl_mode_x.value;
 	if (mode == "1" || mode == "2")
-		document.form.wl_wdslist_x_0.value = smac[0] + smac[1] + smac[2] + smac[3] + smac[4] + smac[5];
+	document.form.wl_wdslist_x_0.value = smac[0] + smac[1] + smac[2] + smac[3] + smac[4] + smac[5];
 	else if (mode == "3" || mode == "4")
-		document.form.wl_sta_ssid.value = wds_aplist[num][0];
+	document.form.wl_sta_ssid.value = wds_aplist[num][0];
 	if (parseInt(wds_aplist[num][2]) > 0)
-		document.form.wl_channel.value = wds_aplist[num][2];
+	document.form.wl_channel.value = wds_aplist[num][2];
 	hideClients_Block();
 }
 
@@ -206,29 +206,25 @@ function showLANIPList(){
 	var show_name = "";
 
 	if(wds_aplist != ""){
-		for(var i = 0; i < wds_aplist.length ; i++){
-			try {
-				wds_aplist[i][0] = decodeURIComponent(wds_aplist[i][0]);
-			} catch (e) {
-				console.log("malformed utf-8 ssid:"+wds_aplist[i][0]);
-			}
-			if(wds_aplist[i][0] && wds_aplist[i][0].length > 16)
-				show_name = wds_aplist[i][0].substring(0, 14) + "..";
-			else
-				show_name = wds_aplist[i][0];
-			
-			if(wds_aplist[i][1] && wds_aplist[i][1].length > 0){
-				code += '<a href="javascript:void(0)"><div onclick="setClientIP('+i+');"><strong>'+show_name+'</strong>';
-				code += ' ['+wds_aplist[i][1]+']';
-				code += ', Ch.'+wds_aplist[i][2];
-				code += ', '+wds_aplist[i][3]+'%';
-				code += ' </div></a>';
-			}
-		}
-		code += '<div style="font-weight:bold;cursor:pointer;" onclick="rescan();"><#AP_survey#>&nbsp;</div>';
+	for(var i = 0; i < wds_aplist.length ; i++){
+	wds_aplist[i][0] = decodeURIComponent(wds_aplist[i][0]);
+	if(wds_aplist[i][0] && wds_aplist[i][0].length > 16)
+	show_name = wds_aplist[i][0].substring(0, 14) + "..";
+	else
+	show_name = wds_aplist[i][0];
+	
+	if(wds_aplist[i][1] && wds_aplist[i][1].length > 0){
+	code += '<a href="javascript:void(0)"><div onclick="setClientIP('+i+');"><strong>'+show_name+'</strong>';
+	code += ' ['+wds_aplist[i][1]+']';
+	code += ', Ch.'+wds_aplist[i][2];
+	code += ', '+wds_aplist[i][3]+'%';
+	code += ' </div></a>';
+	}
+	}
+	code += '<div style="font-weight:bold;cursor:pointer;" onclick="rescan();"><#AP_survey#>&nbsp;</div>';
 	}
 	else{
-		code += '<div style="width: 207px"><center><img style="padding-top: 4px; display: block;" src="/bootstrap/img/ajax-loader.gif"></center></div>';
+	code += '<div style="width: 207px"><center><img style="padding-top: 4px; display: block;" src="/bootstrap/img/ajax-loader.gif"></center></div>';
 	}
 
 	code +='<!--[if lte IE 6.5]><iframe class="hackiframe_wdssurvey"></iframe><![endif]-->';
@@ -239,13 +235,13 @@ var isMenuopen = 0;
 
 function pullLANIPList(obj){
 	if(isMenuopen == 0){
-		$j(obj).children('i').removeClass('icon-chevron-down').addClass('icon-chevron-up');
-		document.getElementById("WDSAPList").style.display = 'block';
-		document.form.wl_wdslist_x_0.focus();
-		isMenuopen = 1;
+	$j(obj).children('i').removeClass('icon-chevron-down').addClass('icon-chevron-up');
+	document.getElementById("WDSAPList").style.display = 'block';
+	document.form.wl_wdslist_x_0.focus();
+	isMenuopen = 1;
 	}
 	else
-		hideClients_Block();
+	hideClients_Block();
 }
 
 function hideClients_Block(){
@@ -275,7 +271,7 @@ function hideClients_Block(){
     <input type="hidden" name="current_page" value="Advanced_WMode_Content.asp">
     <input type="hidden" name="next_page" value="">
     <input type="hidden" name="next_host" value="">
-    <input type="hidden" name="sid_list" value="WLANConfig11a;">
+    <input type="hidden" name="sid_list" value="WLANConfig11a;General;">
     <input type="hidden" name="group_id" value="RBRList">
     <input type="hidden" name="action_mode" value="">
     <input type="hidden" name="action_script" value="">
@@ -369,7 +365,7 @@ function hideClients_Block(){
 
                                     <table width="100%" align="center" cellpadding="4" cellspacing="0" class="table">
                                         <tr id="row_wds_apc" style="display:none;">
-                                            <th width="50%"><a id="ctl_apc_1" class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this, 0, 1);"><#APSTA_SSID#></a></th>
+                                            <th width="50%"><a id="ctl_apc_1" class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this, 0, 1);"><#WLANConfig11b_Channel_itemonssid#></a></th>
                                             <td>
                                                 <div id="WDSAPList" class="alert alert-info ddown-list"></div>
                                                 <div class="input-append" style="float: left;">
@@ -422,7 +418,16 @@ function hideClients_Block(){
                                             </td>
                                         </tr>
                                     </table>
-
+                                    <table class="table">
+                                        <tr id="ap_script">
+                                            <td colspan="2" style="border-top: 0 none;">
+                                                <i class="icon-hand-right"></i><a href="javascript:spoiler_toggle('script12')"><span>ap_script【点击打开配置脚本】</span><div>&nbsp;<span style="color:#888;">增强功能：自动切换中继信号脚本【自动搜寻信道、自动搜寻信号】</span></div></a>
+                                                <div id="script12" style="display:none;">
+                                                    <textarea rows="24" wrap="off" spellcheck="false" maxlength="2097152" class="span12" name="scripts.ap_script.sh" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("scripts.ap_script.sh",""); %></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <table class="table">
                                         <tr>
                                             <td width="50%" style="margin-top: 10px; border-top: 0 none;">
