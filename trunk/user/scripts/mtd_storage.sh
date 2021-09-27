@@ -648,7 +648,6 @@ EOE
 		cat > "$script_aps" <<END
 #!/bin/sh
 #/etc/storage/ap_script.sh
-#copyright by hiboy
 
 # AP中继连接守护功能。【0】 Internet互联网断线后自动搜寻；【1】 当中继信号断开时启动自动搜寻。
 apauto=0
@@ -663,10 +662,10 @@ aptime="0"
 # 控制台输入【echo "" > /tmp/apblack.txt】可以清空黑名单
 apblack=0
 
-fenge='@'         # 自定义分隔符号，默认为【@】，注意:下面配置一同修改
+fenge='@'             # 自定义分隔符号，默认为【@】，注意:下面配置一同修改
 connect_ap=100    # 检查是否连上AP的最大时长； 1=1秒， 2=2秒....
 connect_net=30    # 检查是否联网时最大时长；1=3秒，2=6秒.... (信号差建议设置成50)
-sig=10             # 跳过信号低于sig的AP
+sig=10                  # 跳过信号低于sig的AP
 
 # 【自动切换中继信号】功能 填写配置参数启动
 cat >/tmp/ap2g5g.txt <<-\EOF
@@ -677,18 +676,19 @@ cat >/tmp/ap2g5g.txt <<-\EOF
 # ①2.4Ghz或5Ghz："2"=【2.4Ghz】"5"=【5Ghz】
 # ②无线AP工作模式："0"=【AP（桥接被禁用）】"1"=【WDS桥接（AP被禁用）】"2"=【WDS中继（网桥 + AP）】"3"=【AP-Client（AP被禁用）】"4"=【AP-Client + AP】
 # ③无线AP-Client角色： "0"=【LAN bridge】"1"=【WAN (Wireless ISP)】
-# ④中继AP 的 SSID："ASUS"
+# ④中继AP 的 SSID："K2P"
 # ⑤中继AP 密码："1234567890"
 # ⑥中继AP 的 MAC地址："20:76:90:20:B0:F0"【可以不填，不限大小写】
 # 下面是信号填写参考例子：（删除前面的注释#可生效）
-#2@4@1@ASUS@1234567890
-#2@4@1@ASUS_中文@1234567890@34:bd:f9:1f:d2:b1
-#2@4@1@ASUS3@1234567890@34:bd:f9:1f:d2:b0
+#2@4@1@K2P@1234567890
+#2@4@1@K2P_中文@1234567890@34:bd:f9:1f:d2:b1
+#2@4@1@K2P_wifi@1234567890@34:bd:f9:1f:d2:b0
 
 
 
 
 # *此脚本存在非注释字符时，即生效* #
+
 EOF
 cat /tmp/ap2g5g.txt | grep -v '^#'  | grep -v "^$" > /tmp/ap2g5g
 killall sh_apauto.sh
