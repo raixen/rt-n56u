@@ -337,29 +337,34 @@ EOF
 ### Called on Internet status changed
 ### $1 - Internet status (0/1)
 ### $2 - elapsed time (s) from previous state
-logger -t "【网络检测】" "互联网状态:$1, 经过时间:$2s."
+#logger -t "【网络检测】" "互联网状态:$1, 经过时间:$2s."
 
 if [ $1 != "0" ] ; then
     #网络畅通
     mtk_gpio -w 13 0   #关闭红灯
     mtk_gpio -w 14 1   #关闭黄灯
     mtk_gpio -w 15 0   #开启蓝灯
-    logger -t "【网络检测】" "网络已连接，关闭LED灯"
+    logger -t "【网络检测】" "互联网已连接，开启蓝灯"
     exit
 else
     #网络不通
     mtk_gpio -w 13 0   #开启红灯
     mtk_gpio -w 15 1   #关闭蓝灯
     mtk_gpio -w 14 0   #开启黄灯
-    logger -t "【网络检测】" "互联网已断开，已切换黄灯"
-    [ ! -s /tmp/ap2g5g ] && exit #判断是否需要执行下面的【自动切换】脚本
+    logger -t "【网络检测】" "互联网已断开，开启黄灯"
 fi
 
 
+
+
+
+
 # 【自动切换中继信号】功能 需要到【无线网络 - 无线桥接】页面配置脚本参数
-#  脚本开始，以下内容无需修改
+#  以下内容无需修改
 
 . /etc/storage/ap_script.sh
+[ -z `cat /tmp/apauto.lock 2>/dev/null` ] && exit
+#判断是否需要执行下面的【自动切换】脚本
 baidu='http://gb.corp.163.com/gb/images/spacer.gif'
 aptimes="$1"
 if [ $((aptimes)) -gt "9" ] ; then
@@ -497,7 +502,7 @@ if [ ! -f /tmp/apc.lock ] && [ "$1" != "1" ] && [ -s /tmp/ap2g5g ] ; then
                 if [ "$radio" = "2" ] ; then
                     nvram set rt_channel=$Ch
                     iwpriv apcli0 set Channel=$Ch
-                    nvram set wl_mode_x=0 # 关闭 5Ghz 中继
+                    nvram set wl_mode_x=0    #  关闭 5Ghz 中继
                     nvram set rt_mode_x="$rtwlt_mode_x"
                     nvram set rt_sta_wisp="$rtwlt_sta_wisp"
                     nvram set rt_sta_ssid="$rtwlt_sta_ssid"
@@ -505,8 +510,7 @@ if [ ! -f /tmp/apc.lock ] && [ "$1" != "1" ] && [ -s /tmp/ap2g5g ] ; then
                     nvram set rt_sta_wpa_mode="$rtwlt_sta_wpa_mode"
                     nvram set rt_sta_crypto="$rtwlt_sta_crypto"
                     nvram set rt_sta_wpa_psk="$rtwlt_sta_wpa_psk"
-                    #强制20MHZ
-                    #nvram set rt_HT_BW=0
+                    #nvram set rt_HT_BW=0    #强制20MHZ
                     nvram commit
                     radio2_restart
                     while [ $i -lt $connect_ap ]; do
@@ -518,7 +522,7 @@ if [ ! -f /tmp/apc.lock ] && [ "$1" != "1" ] && [ -s /tmp/ap2g5g ] ; then
                 else
                     nvram set wl_channel=$Ch
                     iwpriv apclii0 set Channel=$Ch
-                    nvram set rt_mode_x=0 # 关闭 2.4Ghz 中继
+                    nvram set rt_mode_x=0     # 关闭 2.4Ghz 中继
                     nvram set wl_mode_x="$rtwlt_mode_x"
                     nvram set wl_sta_wisp="$rtwlt_sta_wisp"
                     nvram set wl_sta_ssid="$rtwlt_sta_ssid"
@@ -662,10 +666,10 @@ aptime="0"
 # 控制台输入【echo "" > /tmp/apblack.txt】可以清空黑名单
 apblack=0
 
-fenge='@'             # 自定义分隔符号，默认为【@】，注意:下面配置一同修改
 connect_ap=100    # 检查是否连上AP的最大时长； 1=1秒， 2=2秒....
 connect_net=30    # 检查是否联网时最大时长；1=3秒，2=6秒.... (信号差建议设置成50)
 sig=10                  # 跳过信号低于sig的AP
+fenge='~'             # 自定义分隔符号，默认为【~】，注意:下面配置一同修改
 
 # 【自动切换中继信号】功能 填写配置参数启动
 cat >/tmp/ap2g5g.txt <<-\EOF
@@ -676,23 +680,22 @@ cat >/tmp/ap2g5g.txt <<-\EOF
 # ①2.4Ghz或5Ghz："2"=【2.4Ghz】"5"=【5Ghz】
 # ②无线AP工作模式："0"=【AP（桥接被禁用）】"1"=【WDS桥接（AP被禁用）】"2"=【WDS中继（网桥 + AP）】"3"=【AP-Client（AP被禁用）】"4"=【AP-Client + AP】
 # ③无线AP-Client角色： "0"=【LAN bridge】"1"=【WAN (Wireless ISP)】
-# ④中继AP 的 SSID："K2P"
+# ④中继AP 的 SSID："ASUS"
 # ⑤中继AP 密码："1234567890"
 # ⑥中继AP 的 MAC地址："20:76:90:20:B0:F0"【可以不填，不限大小写】
 # 下面是信号填写参考例子：（删除前面的注释#可生效）
-#2@4@1@K2P@1234567890
-#2@4@1@K2P_中文@1234567890@34:bd:f9:1f:d2:b1
-#2@4@1@K2P_wifi@1234567890@34:bd:f9:1f:d2:b0
+#2~4~1~ASUS~1234567890
+#2~4~1~ASUS_中文~1234567890~34:bd:f9:1f:d2:b1
+#2~4~1~ASUS3~1234567890~34:bd:f9:1f:d2:b0
 
 
 
 
-# *此脚本存在非注释字符时，即生效* #
-
+# *以上内容可根据需求修改。* #
 EOF
 cat /tmp/ap2g5g.txt | grep -v '^#'  | grep -v "^$" > /tmp/ap2g5g
-killall sh_apauto.sh
 if [ -s /tmp/ap2g5g ] ; then
+killall sh_apauto.sh
 cat >/tmp/sh_apauto.sh <<-\EOF
 #!/bin/sh
     logger -t "【AP中继】" "连接守护启动"
@@ -927,7 +930,8 @@ EOF
 	# create user dns servers
 	if [ ! -f "$user_dhcp_conf" ] ; then
 		cat > "$user_dhcp_conf" <<EOF
-#6C:96:CF:E0:95:55,192.168.1.10,iMac
+# MAC Address,IP Address,HostName
+#6C:96:CF:E0:95:55,192.168.2.10,iMac
 
 EOF
 		chmod 644 "$user_dhcp_conf"
@@ -960,7 +964,7 @@ EOF
 		cat > "$user_hosts" <<EOF
 # Custom user hosts file
 # Example:
-# 192.168.1.100		Boo
+# 192.168.2.1		my.router
 
 EOF
 		chmod 644 "$user_hosts"
