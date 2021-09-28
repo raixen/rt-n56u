@@ -348,7 +348,7 @@ if [ $1 != "0" ] ; then
     exit
 else
     #网络不通
-    mtk_gpio -w 13 0   #开启红灯
+    mtk_gpio -w 13 0   #关闭红灯
     mtk_gpio -w 15 1   #关闭蓝灯
     mtk_gpio -w 14 0   #开启黄灯
     logger -t "【网络检测】" "互联网已断开，开启黄灯"
