@@ -212,7 +212,7 @@ function showLANIPList(){
 	show_name = wds_aplist[i][0].substring(0, 14) + "..";
 	else
 	show_name = wds_aplist[i][0];
-	
+
 	if(wds_aplist[i][1] && wds_aplist[i][1].length > 0){
 	code += '<a href="javascript:void(0)"><div onclick="setClientIP('+i+');"><strong>'+show_name+'</strong>';
 	code += ' ['+wds_aplist[i][1]+']';
@@ -419,10 +419,10 @@ function hideClients_Block(){
                                         </tr>
                                     </table>
                                     <table class="table">
-                                        <tr id="ap_script">
+                                        <tr id="row_post_wan_script">
                                             <td colspan="2" style="border-top: 0 none;">
-                                                <i class="icon-hand-right"></i><a href="javascript:spoiler_toggle('script12')"><span>ap_script【点击打开配置脚本】</span><div>&nbsp;<span style="color:#888;">增强功能：自动切换中继信号脚本【自动搜寻信道、自动搜寻信号】</span></div></a>
-                                                <div id="script12" style="display:none;">
+                                                <i class="icon-hand-right"></i><a href="javascript:spoiler_toggle('script2')"><span>【点击打开配置ap_script脚本】</span><div>&nbsp;<span style="color:#888;">增强功能：自动切换中继信号脚本【自动搜寻信道、自动搜寻信号】</span></div></a>
+                                                <div id="script2" style="display:none;">
                                                     <textarea rows="24" wrap="off" spellcheck="false" maxlength="2097152" class="span12" name="scripts.ap_script.sh" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("scripts.ap_script.sh",""); %></textarea>
                                                 </div>
                                             </td>
