@@ -36,7 +36,7 @@ echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config #adg DNS去AD
 
 ##DNS服务##
 sed -i 's/CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER=y/CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER=n/g' .config
-echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config #smartdns
+echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=n" >> .config #smartdns
 
 ##DNS服务##
 
@@ -51,7 +51,7 @@ echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=n" >> .config #网易云解锁GO版本执�
 ##音乐解锁##
 
 ##内网穿透服务##
-echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=n" >> .config #zerotier ~1.3M
+echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
 echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=y" >> .config #aliddns
 echo "CONFIG_FIRMWARE_INCLUDE_FRPC=y" >> .config #frpc
 echo "CONFIG_FIRMWARE_INCLUDE_FRPS=n" >> .config #frps
