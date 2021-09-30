@@ -585,14 +585,29 @@ function show_menu(L1, L2, L3){
 		tablink[9].splice(2,4);
 		tablink[2][1] = "Advanced_APLAN_Content.asp";
 		menuL2_link[3] = tablink[2][1];
-		menuL2_link[4] = "";  //remove WAN
-		menuL2_title[4] = "";
-		menuL2_link[5] = "";  //remove Firewall
-		menuL2_title[5] = "";
 		menuL1_link[3] = "";  //remove VPN svr
 		menuL1_title[3] = "";
 		menuL1_link[4] = "";  //remove VPN cli
 		menuL1_title[4] = "";
+		menuL2_link[4] = "";  //remove WAN
+		menuL2_title[4] = "";
+		menuL2_link[5] = "";  //remove Firewall
+		menuL2_title[5] = "";
+		menuL2_link[11] = "";  //remove
+		menuL2_title[11] = "";
+		menuL2_link[12] = "";
+		menuL2_title[12] = "";
+		menuL2_link[13] = "";
+		menuL2_title[13] = "";
+		menuL2_link[14] = "";
+		menuL2_title[14] = "";
+		menuL2_link[15] = "";
+		menuL2_title[15] = "";
+		menuL2_link[17] = "";
+		menuL2_title[17] = "";
+		menuL2_link[19] = "";
+		menuL2_title[19] = "";
+
 		
 		if (lan_proto == '1'){
 			tabtitle[2].splice(2,1);
