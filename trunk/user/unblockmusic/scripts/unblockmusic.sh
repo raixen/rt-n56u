@@ -1,4 +1,7 @@
 #!/bin/sh
+UnblockMusicGo=/tmp/UnblockNeteaseMusic
+Download_URL1="https://hub.fastgit.org/cnsilvan/UnblockNeteaseMusic/releases/download/0.2.12/UnblockNeteaseMusic-linux-mipsle.zip"
+Download_URL2="https://github.com/cnsilvan/UnblockNeteaseMusic/releases/download/0.2.12/UnblockNeteaseMusic-linux-mipsle.zip"
 
 check_host() {
   local host=$1
@@ -82,7 +85,7 @@ add_rule()
 	fi
 	$ipt_n -I PREROUTING -p tcp -m set --match-set music dst -j CLOUD_MUSIC
 	iptables -I OUTPUT -d 223.252.199.10 -j DROP
-	
+
 	ip_rule
 }
 
@@ -91,10 +94,10 @@ del_rule(){
 	$ipt_n -F CLOUD_MUSIC  2>/dev/null
 	$ipt_n -X CLOUD_MUSIC  2>/dev/null
 	iptables -D OUTPUT -d 223.252.199.10 -j DROP 2>/dev/null
-	
+
 	ipset -X music_http 2>/dev/null
 	ipset -X music_https 2>/dev/null
-	
+
 	rm -rf /tmp/dnsmasq.music
 	sed -i '/dnsmasq.music/d' /etc/storage/dnsmasq/dnsmasq.conf
 	/sbin/restart_dhcpd
@@ -123,35 +126,44 @@ add_rule
 wyy_start()
 {
 	[ $ENABLE -eq "0" ] && exit 0
-	if [ "$TYPE" = "default" ]; then
+  if [ "$TYPE" = "default" ]; then
 		musictype=" "
-	else
+  else
 		musictype="-o $TYPE"
-	fi
-	if [ "$APPTYPE" == "go" ]; then
-	if [ $FLAC -eq 1 ]; then
-      ENABLE_FLAC="-b "
+  fi
+  if [ "$APPTYPE" == "go" ]; then
+    if [ ! -f $UnblockMusicGo ] ;then
+        mkdir -p /tmp/UnblockMusicGo
+        logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic Golang版..."
+        wget -P /tmp/UnblockMusicGo $Download_URL1
+        [ $? != 0 ] && wget -P /tmp/UnblockMusicGo $Download_URL2
+        unzip -d /tmp/UnblockMusicGo /tmp/UnblockMusicGo/UnblockNeteaseMusic-linux-mipsle.zip
+        mv /tmp/UnblockMusicGo/UnblockNeteaseMusic $UnblockMusicGo; chmod +x $UnblockMusicGo; rm -rf /tmp/UnblockMusicGo
+        [ ! -f $UnblockMusicGo ] && logger -t "音乐解锁" "下载失败，请稍后再试！"
     fi
-    UnblockNeteaseMusic $ENABLE_FLAC -p 5200 -sp 5201 -m 0 -c /etc_ro/UnblockNeteaseMusicGo/server.crt -k /etc_ro/UnblockNeteaseMusicGo/server.key -m 0 -e >/dev/null 2>&1 &
-    logger -t "音乐解锁" "启动 Golang Version (http:5200, https:5201)"    
+	if [ $FLAC -eq 1 ]; then
+        ENABLE_FLAC="-b "
+    fi
+    $UnblockMusicGo $ENABLE_FLAC -p 5200 -sp 5201 -m 0 -c /etc_ro/UnblockNeteaseMusicGo/server.crt -k /etc_ro/UnblockNeteaseMusicGo/server.key -m 0 -e >/dev/null 2>&1 &
+    logger -t "音乐解锁" "启动 Golang Version (http:5200, https:5201)"
   else
     kill -9 $(busybox ps -w | grep 'sleep 60m' | grep -v grep | awk '{print $1}') >/dev/null 2>&1
     /usr/bin/UnblockNeteaseMusicCloud >/dev/null 2>&1 &
      logger -t "音乐解锁" "启动 Cloud Version - Server: $cloudip (http:$cloudhttp, https:$cloudhttps)"
-	fi
-		
+  fi
+
 	set_firewall
-	
+
   if [ "$APPTYPE" != "cloud" ]; then
     /usr/bin/logcheck.sh >/dev/null 2>&1 &
   fi
 }
 
 wyy_close()
-{	
+{
 	kill -9 $(busybox ps -w | grep UnblockNeteaseMusic | grep -v grep | awk '{print $1}') >/dev/null 2>&1
 	kill -9 $(busybox ps -w | grep logcheck.sh | grep -v grep | awk '{print $1}') >/dev/null 2>&1
-	
+
 	del_rule
 	logger -t "音乐解锁" "已关闭"
 }
