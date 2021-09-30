@@ -14,7 +14,6 @@ build:
 	( cd $(THISDIR)/UnblockNeteaseMusicGo; \
 	tar -xzvf $(THISDIR)/UnblockNeteaseMusic-Go_$(UM_VERSION).tar.gz -C $(THISDIR)/UnblockNeteaseMusicGo; \
 	\mv $(THISDIR)/UnblockNeteaseMusicGo/ca.crt $(THISDIR)/UnblockNeteaseMusicGo/server.* $(THISDIR)/file/ ; \
-	\mv $(THISDIR)/UnblockNeteaseMusicGo/UnblockNeteaseMusic $(THISDIR)/bin/UnblockNeteaseMusic; \
 	)
 
 
