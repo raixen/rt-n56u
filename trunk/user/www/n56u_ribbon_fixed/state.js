@@ -603,8 +603,8 @@ function show_menu(L1, L2, L3){
 		menuL2_title[14] = "";
 		menuL2_link[15] = "";
 		menuL2_title[15] = "";
-		menuL2_link[17] = "";
-		menuL2_title[17] = "";
+		menuL2_link[16] = "";
+		menuL2_title[16] = "";
 		menuL2_link[19] = "";
 		menuL2_title[19] = "";
 
