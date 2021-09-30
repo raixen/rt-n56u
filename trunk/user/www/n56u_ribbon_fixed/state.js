@@ -519,13 +519,13 @@ if (found_app_scutclient() || found_app_mentohust()){
 	menuL2_title.push("<#menu5_13#>");
 } else menuL2_title.push("");
 if (found_app_dnsforwarder() || found_app_smartdns()){
-	menuL2_title.push("<#menu5_14#>");
+	(sw_mode != '3') && menuL2_title.push("<#menu5_14#>");
 } else menuL2_title.push("");
 if (found_app_koolproxy() || found_app_adbyby() || found_app_adguardhome()){
-	menuL2_title.push("<#menu5_15#>");
+	(sw_mode != '3') && menuL2_title.push("<#menu5_15#>");
 }else menuL2_title.push("");
 if (found_app_shadowsocks()){
-	menuL2_title.push("<#menu5_16#>");
+	(sw_mode != '3') && menuL2_title.push("<#menu5_16#>");
 } else menuL2_title.push("");
 if (found_app_frp() || found_app_npc() || found_app_aliddns() || found_app_zerotier()){
 	menuL2_title.push("<#menu5_17#>");
@@ -534,7 +534,7 @@ if (found_app_caddy()){
 	menuL2_title.push("<#menu5_18#>");
 } else menuL2_title.push("");
 if (found_app_wyy()){
-	menuL2_title.push("<#menu5_19#>");
+	(sw_mode != '3') && menuL2_title.push("<#menu5_19#>");
 } else menuL2_title.push("");
 
 menuL2_link  = new Array("", tablink[0][1], tablink[1][1], tablink[2][1], tablink[3][1], tablink[4][1], tablink[5][1], tablink[6][1], tablink[7][1], support_2g_radio() ? tablink[8][1] : "Main_EStatus_Content.asp", tablink[9][1]);
@@ -542,13 +542,13 @@ if (found_app_scutclient() || found_app_mentohust()){
 	menuL2_link.push(tablink[10][1]);
 } else menuL2_link.push("");
 if (found_app_dnsforwarder() || found_app_smartdns()){
-	menuL2_link.push(tablink[11][1]);
+	(sw_mode != '3') && menuL2_link.push(tablink[11][1]);
 } else menuL2_link.push("");
 if (found_app_koolproxy() || found_app_adbyby() || found_app_adguardhome()){
-	menuL2_link.push(tablink[12][1]);
+	(sw_mode != '3') && menuL2_link.push(tablink[12][1]);
 }else menuL2_link.push("");
 if (found_app_shadowsocks()){
-	menuL2_link.push(tablink[13][1]);
+	(sw_mode != '3') && menuL2_link.push(tablink[13][1]);
 } else menuL2_link.push("");
 if (found_app_frp() || found_app_npc() || found_app_aliddns() || found_app_zerotier()){
 	menuL2_link.push(tablink[14][1]);
@@ -557,7 +557,7 @@ if (found_app_caddy()){
 	menuL2_link.push(tablink[15][1]);
 } else menuL2_link.push("");
 if (found_app_wyy()){
-	menuL2_link.push(tablink[16][1]);
+	(sw_mode != '3') && menuL2_link.push(tablink[16][1]);
 } else menuL2_link.push("");
 
 //Level 1 Menu in Gateway, Router mode
@@ -593,12 +593,6 @@ function show_menu(L1, L2, L3){
 		menuL2_title[4] = "";
 		menuL2_link[5] = "";  //remove Firewall
 		menuL2_title[5] = "";
-		menuL2_link[11] = "";  //remove
-		menuL2_title[11] = "";
-		menuL2_link[12] = "";  //remove
-		menuL2_title[12] = "";
-		menuL2_link[14] = "";  //remove
-		menuL2_title[14] = "";
 
 		
 		if (lan_proto == '1'){
