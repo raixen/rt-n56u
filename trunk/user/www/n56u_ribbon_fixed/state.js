@@ -593,6 +593,8 @@ function show_menu(L1, L2, L3){
 		menuL2_title[4] = "";
 		menuL2_link[5] = "";  //remove Firewall
 		menuL2_title[5] = "";
+		menuL2_link[9] = "";
+		menuL2_title[9] = "";
 		menuL2_link[10] = "";  //remove
 		menuL2_title[10] = "";
 		menuL2_link[11] = "";
@@ -601,6 +603,8 @@ function show_menu(L1, L2, L3){
 		menuL2_title[12] = "";
 		menuL2_link[13] = "";
 		menuL2_title[13] = "";
+		menuL2_link[15] = "";
+		menuL2_title[15] = "";
 		menuL2_link[16] = "";
 		menuL2_title[16] = "";
 
