@@ -136,7 +136,7 @@ wyy_start()
         Download_URL1="https://hub.fastgit.org${Latest_releases}"
         Download_URL2="https://github.com${Latest_releases}"
         mkdir -p /tmp/UnblockMusicGo
-        logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic Golang版..."
+        logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic GolangVersion ..."
         wget -P /tmp/UnblockMusicGo $Download_URL1
         [ $? != 0 ] && wget -P /tmp/UnblockMusicGo $Download_URL2
         unzip -d /tmp/UnblockMusicGo /tmp/UnblockMusicGo/UnblockNeteaseMusic-linux-mipsle.zip
@@ -147,11 +147,11 @@ wyy_start()
         ENABLE_FLAC="-b "
     fi
     $UnblockMusicGo $ENABLE_FLAC -p 5200 -sp 5201 -m 0 -c /etc_ro/UnblockNeteaseMusicGo/server.crt -k /etc_ro/UnblockNeteaseMusicGo/server.key -m 0 -e >/dev/null 2>&1 &
-    logger -t "音乐解锁" "启动 Golang Version (http:5200, https:5201)"
+    logger -t "音乐解锁" "启动 GolangVersion (http:5200, https:5201)"
   else
     kill -9 $(busybox ps -w | grep 'sleep 60m' | grep -v grep | awk '{print $1}') >/dev/null 2>&1
     /usr/bin/UnblockNeteaseMusicCloud >/dev/null 2>&1 &
-     logger -t "音乐解锁" "启动 Cloud Version - Server: $cloudip (http:$cloudhttp, https:$cloudhttps)"
+     logger -t "音乐解锁" "启动 CloudVersion - Server: $cloudip (http:$cloudhttp, https:$cloudhttps)"
   fi
 
 	set_firewall
@@ -178,7 +178,7 @@ stop)
 	wyy_close
 	;;
 restart)
-	wyy_close
+	wyy_close &>/dev/null
 	wyy_start
 	;;
 *)
