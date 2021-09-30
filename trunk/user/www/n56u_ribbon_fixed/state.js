@@ -593,16 +593,12 @@ function show_menu(L1, L2, L3){
 		menuL2_title[4] = "";
 		menuL2_link[5] = "";  //remove Firewall
 		menuL2_title[5] = "";
-		tablink[10] = "";
-		tabtitle[10] = "";  //remove
-		tablink[11] = "";
-		tabtitle[11] = "";
-		tablink[12] = "";
-		tabtitle[12] = "";
-		tablink[13] = "";
-		tabtitle[13] = "";
-		tablink[16] = "";
-		tabtitle[16] = "";
+		menuL2_link[11] = "";  //remove
+		menuL2_title[11] = "";
+		menuL2_link[12] = "";  //remove
+		menuL2_title[12] = "";
+		menuL2_link[14] = "";  //remove
+		menuL2_title[14] = "";
 
 		
 		if (lan_proto == '1'){
