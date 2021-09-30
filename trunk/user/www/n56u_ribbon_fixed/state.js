@@ -593,16 +593,16 @@ function show_menu(L1, L2, L3){
 		menuL2_title[4] = "";
 		menuL2_link[5] = "";  //remove Firewall
 		menuL2_title[5] = "";
-		tablink[10][1] = "";  //remove
-		tabtitle[10][1] = "";
-		tablink[11][1] = "";
-		tabtitle[11][1] = "";
-		tablink[12][1] = "";
-		tabtitle[12][1] = "";
-		tablink[13][1] = "";
-		tabtitle[13][1] = "";
-		tablink[16][1] = "";
-		tabtitle[16][1] = "";
+		menuL2_link[10] = "";  //remove
+		menuL2_title[10] = "";
+		menuL2_link[11] = "";
+		menuL2_title[11] = "";
+		menuL2_link[12] = "";
+		menuL2_title[12] = "";
+		menuL2_link[13] = "";
+		menuL2_title[13] = "";
+		menuL2_link[16] = "";
+		menuL2_title[16] = "";
 
 		
 		if (lan_proto == '1'){
