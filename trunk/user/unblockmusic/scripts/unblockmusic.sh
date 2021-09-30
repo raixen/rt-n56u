@@ -132,7 +132,7 @@ wyy_start()
   if [ "$APPTYPE" == "go" ]; then
     if [ ! -f $UnblockMusicGo ] ;then
         Latest_releases=`curl -skL https://api.github.com/repos/cnsilvan/UnblockNeteaseMusic/releases/latest --connect-timeout 8 2>/dev/null|grep 'browser_download_url' |grep linux-mipsle.zip |awk -F"github.com" '{print $NF}'|sed s/\"//`
-        [ "$Latest_releases" == "" ] && ="/cnsilvan/UnblockNeteaseMusic/releases/download/0.2.12/UnblockNeteaseMusic-linux-mipsle.zip"
+        [ "$Latest_releases" == "" ] && Latest_releases="/cnsilvan/UnblockNeteaseMusic/releases/download/0.2.12/UnblockNeteaseMusic-linux-mipsle.zip"
         Download_URL1="https://hub.fastgit.org${Latest_releases}"
         Download_URL2="https://github.com${Latest_releases}"
         mkdir -p /tmp/UnblockMusicGo
