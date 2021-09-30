@@ -1,11 +1,5 @@
 #!/bin/sh
-if [[ -z `which UnblockNeteaseMusic` ]];then
 UnblockMusicGo=/tmp/UnblockNeteaseMusic
-Latest_releases=`curl -s https://api.github.com/repos/cnsilvan/UnblockNeteaseMusic/releases/latest --connect-timeout 8 2>/dev/null|grep 'browser_download_url' |grep linux-mipsle.zip |awk -F"github.com" '{print $NF}'|sed s/\"//`
-[ "$Latest_releases" == "" ] && ="/cnsilvan/UnblockNeteaseMusic/releases/download/0.2.12/UnblockNeteaseMusic-linux-mipsle.zip"
-Download_URL1="https://hub.fastgit.org${Latest_releases}"
-Download_URL2="https://github.com${Latest_releases}"
-fi
 
 check_host() {
   local host=$1
@@ -137,6 +131,10 @@ wyy_start()
   fi
   if [ "$APPTYPE" == "go" ]; then
     if [ ! -f $UnblockMusicGo ] ;then
+        Latest_releases=`curl -sL https://api.github.com/repos/cnsilvan/UnblockNeteaseMusic/releases/latest --connect-timeout 8 2>/dev/null|grep 'browser_download_url' |grep linux-mipsle.zip |awk -F"github.com" '{print $NF}'|sed s/\"//`
+        [ "$Latest_releases" == "" ] && ="/cnsilvan/UnblockNeteaseMusic/releases/download/0.2.12/UnblockNeteaseMusic-linux-mipsle.zip"
+        Download_URL1="https://hub.fastgit.org${Latest_releases}"
+        Download_URL2="https://github.com${Latest_releases}"
         mkdir -p /tmp/UnblockMusicGo
         logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic Golang版..."
         wget -P /tmp/UnblockMusicGo $Download_URL1
