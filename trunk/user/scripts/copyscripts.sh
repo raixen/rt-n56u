@@ -107,3 +107,4 @@ mkdir -p /etc/storage/gfwlist
 cp -rf /etc_ro/gfwlist_list.conf /etc/storage/gfwlist/
 chmod 755 "/etc/storage/gfwlist/gfwlist_list.conf"
 fi
+chmod 755 /etc/storage/*.sh
