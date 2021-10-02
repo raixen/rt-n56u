@@ -519,17 +519,17 @@ if (found_app_scutclient() || found_app_mentohust()){
 	menuL2_title.push("<#menu5_13#>");
 } else menuL2_title.push("");
 if (found_app_dnsforwarder() || found_app_smartdns()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_title.push("<#menu5_14#>");
 	} else menuL2_title.push("");
 } else menuL2_title.push("");
 if (found_app_koolproxy() || found_app_adbyby() || found_app_adguardhome()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_title.push("<#menu5_15#>");
 	} else menuL2_title.push("");
 }else menuL2_title.push("");
 if (found_app_shadowsocks()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_title.push("<#menu5_16#>");
 	} else menuL2_title.push("");
 } else menuL2_title.push("");
@@ -540,7 +540,7 @@ if (found_app_caddy()){
 	menuL2_title.push("<#menu5_18#>");
 } else menuL2_title.push("");
 if (found_app_wyy()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_title.push("<#menu5_19#>");
 	} else menuL2_title.push("");
 } else menuL2_title.push("");
@@ -550,17 +550,17 @@ if (found_app_scutclient() || found_app_mentohust()){
 	menuL2_link.push(tablink[10][1]);
 } else menuL2_link.push("");
 if (found_app_dnsforwarder() || found_app_smartdns()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_link.push(tablink[11][1]);
 	} else menuL2_link.push("");
 } else menuL2_link.push("");
 if (found_app_koolproxy() || found_app_adbyby() || found_app_adguardhome()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_link.push(tablink[12][1]);
 	} else menuL2_link.push("");
 } else menuL2_link.push("");
 if (found_app_shadowsocks()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_link.push(tablink[13][1]);
 	} else menuL2_link.push("");
 } else menuL2_link.push("");
@@ -571,7 +571,7 @@ if (found_app_caddy()){
 	menuL2_link.push(tablink[15][1]);
 } else menuL2_link.push("");
 if (found_app_wyy()){
-	if (sw_mode!="2" || sw_mode!="3"){
+	if (sw_mode!="2" && sw_mode!="3"){
 		menuL2_link.push(tablink[16][1]);
 	} else menuL2_link.push("");
 } else menuL2_link.push("");
