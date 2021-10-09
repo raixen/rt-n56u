@@ -8,7 +8,8 @@ ARCHIVE_SSR_NAME=shadowsocksr-libev-master-e2373d7
 #https://github.com/shadowsocksr-backup/shadowsocksr-libev.git
 
 
-all: extract_test config_test
+#all: extract_test config_test
+all:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
 	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SSR_NAME)
 endif
@@ -91,6 +92,14 @@ clean_ss:
 	
 romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
+	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SSR_NAME)/src/ss-redir /usr/bin/ssr-redir
+	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SSR_NAME)/src/ss-local /usr/bin/ssr-local
+	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SS_NAME)/src/ss-redir /usr/bin/ss-redir
+	#$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SS_NAME)/src/ss-tunnel /usr/bin/ss-tunne
+	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SS_NAME)/src/ss-local /usr/bin/ss-local
+	$(ROMFSINST) -p +x $(THISDIR)/scripts/ss-check /usr/bin/ss-check 
+	#ln -sf /var/ss-redir $(ROMFSDIR)/usr/bin/ss-redir
+	#ln -sf /var/ss-tunnel $(ROMFSDIR)/usr/bin/ss-local
 	chmod -R +x scripts/
 	$(ROMFSINST) $(THISDIR)/scripts/ /usr/bin/
 	#$(ROMFSINST) $(THISDIR)/gfwlist/gfwlist.bz2 /etc_ro/gfwlist.bz2
@@ -105,14 +114,6 @@ ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
 	$(ROMFSINST) /etc_ro/ss_dlink.sh
 	#$(ROMFSINST) /etc_ro/dlink.js
 	$(ROMFSINST) $(THISDIR)/ss/ /etc_ro/ss/
-	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SSR_NAME)/src/ss-redir /usr/bin/ssr-redir
-	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SSR_NAME)/src/ss-local /usr/bin/ssr-local
-	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SS_NAME)/src/ss-redir /usr/bin/ss-redir
-	#$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SS_NAME)/src/ss-tunnel /usr/bin/ss-tunne
-	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SS_NAME)/src/ss-local /usr/bin/ss-local
-	$(ROMFSINST) -p +x $(THISDIR)/scripts/ss-check /usr/bin/ss-check 
-	#ln -sf /var/ss-redir $(ROMFSDIR)/usr/bin/ss-redir
-	#ln -sf /var/ss-tunnel $(ROMFSDIR)/usr/bin/ss-local
 endif
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SSSERVER),y)
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SS_NAME)/src/ss-server /usr/bin/ss-server
