@@ -112,19 +112,19 @@ local type=$stype
 		lua /etc_ro/ss/gentrojanconfig.lua $1 client 10801 >/tmp/trojan-ssr-reudp.json
 		sed -i 's/\\//g' /tmp/trojan-ssr-reudp.json
 		fi
-		chmod +x $tj_bin
+		chmod -R $tj_bin
 		;;
 	v2ray)
 		v2_bin="/usr/bin/v2ray"
 		if [ ! -f "$v2_bin" ]; then
 		if [ ! -f "/tmp/v2ray" ]; then
 		    logger -t "SS" "开始下载v2ray二进制文件..."
-			curl -L -k -s -o /tmp/v2ray --connect-timeout 15 --retry 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
+			curl -skL -o /tmp/v2ray --connect-timeout 15 --retry 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
 			if [ ! -f "/tmp/v2ray" ]; then
 				logger -t "SS" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！准备切换备用下载地址！"
 				sleep 30
-				curl -L -k -s -o /tmp/v2ray --connect-timeout 20 --retry 3 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/xray
-				[ $? != 0 ] && curl -skL -o /tmp/v2ray --connect-timeout 30 --retry 3 https://raw.fastgit.org/xumng123/rt-n56u/master/trunk/user/v2ray/v2ray
+				curl -skL -o /tmp/v2ray --connect-timeout 20 --retry 3 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/xray
+				[ $? != 0 ] && curl -skL -o /tmp/v2ray --connect-timeout 20 --retry 3 https://raw.fastgit.org/xumng123/rt-n56u/master/trunk/user/v2ray/v2ray
 				if [ ! -f "/tmp/v2ray" ]; then
 					logger -t "SS" "v2ray二进制文件备用地址下载失败！请自查网络！"
 					nvram set ss_enable=0
@@ -143,7 +143,7 @@ local type=$stype
 				v2_bin="/tmp/v2ray"
 		fi
 		fi
-		v2ray_enable=1; chmod +x $v2_bin
+		v2ray_enable=1; chmod -R $v2_bin
 		if [ "$2" = "1" ]; then
 		lua /etc_ro/ss/genv2config.lua $1 udp 1080 >/tmp/v2-ssr-reudp.json
 		sed -i 's/\\//g' /tmp/v2-ssr-reudp.json
@@ -180,7 +180,7 @@ local type=$stype
 				v2_bin="/tmp/v2ray"
 		fi
 		fi
-		v2ray_enable=1; chmod +x $v2_bin
+		v2ray_enable=1; chmod -R $v2_bin
 		if [ "$2" = "1" ]; then
 		lua /etc_ro/ss/genxrayconfig.lua $1 udp 1080 >/tmp/v2-ssr-reudp.json
 		sed -i 's/\\//g' /tmp/v2-ssr-reudp.json
