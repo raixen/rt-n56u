@@ -132,8 +132,8 @@ wyy_start()
   if [ "$APPTYPE" == "go" ]; then
     if [ ! -f $UnblockMusicGo ] ;then
     logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic GolangVersion ..."
-    wget -P "$UnblockMusicGo" https://raw.fastgit.org/eprea/cdn/master/UnblockNeteaseMusic
-    [ $? != 0 ] && wget -P "$UnblockMusicGo" https://ghproxy.com/https://github.com/eprea/cdn/raw/master/UnblockNeteaseMusic
+    wget -P /tmp/UnblockMusicGo https://raw.fastgit.org/eprea/cdn/master/UnblockNeteaseMusic
+    [ $? != 0 ] && sleep 20 && wget -P /tmp/UnblockMusicGo https://ghproxy.com/https://github.com/eprea/cdn/raw/master/UnblockNeteaseMusic
     fi
     if [ ! -f $UnblockMusicGo ] ;then
         Latest_releases=`curl -skL https://api.github.com/repos/cnsilvan/UnblockNeteaseMusic/releases/latest --connect-timeout 8 2>/dev/null|grep 'browser_download_url' |grep linux-mipsle.zip |awk -F"github.com" '{print $NF}'|sed s/\"//`
@@ -141,7 +141,7 @@ wyy_start()
         Download_URL1="https://hub.fastgit.org${Latest_releases}"
         Download_URL2="https://github.com${Latest_releases}"
         mkdir -p /tmp/UnblockMusicGo
-        logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic GolangVersion ..."
+        logger -t "音乐解锁" "正在下载2 UnblockNeteaseMusic GolangVersion ..."
         wget -P /tmp/UnblockMusicGo $Download_URL1
         [ $? != 0 ] && wget -P /tmp/UnblockMusicGo $Download_URL2
         unzip -d /tmp/UnblockMusicGo /tmp/UnblockMusicGo/UnblockNeteaseMusic-linux-mipsle.zip
@@ -151,7 +151,7 @@ wyy_start()
 	if [ $FLAC -eq 1 ]; then
         ENABLE_FLAC="-b "
     fi
-    chmod +x $UnblockMusicGo
+    chmod -R $UnblockMusicGo
     $UnblockMusicGo $ENABLE_FLAC -p 5200 -sp 5201 -m 0 -c /etc_ro/UnblockNeteaseMusicGo/server.crt -k /etc_ro/UnblockNeteaseMusicGo/server.key -m 0 -e >/dev/null 2>&1 &
     logger -t "音乐解锁" "启动 GolangVersion (http:5200, https:5201)"
   else
