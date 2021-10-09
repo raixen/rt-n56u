@@ -9,7 +9,7 @@ ARCHIVE_SSR_NAME=shadowsocksr-libev-master-e2373d7
 
 
 #all: extract_test config_test
-all:
+
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
 	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SSR_NAME)
 endif
