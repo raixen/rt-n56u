@@ -81,12 +81,12 @@ local type=$stype
 		if [ ! -f "$tj_bin" ]; then
 		if [ ! -f "/tmp/trojan" ]; then
 		    logger -t "SS" "开始下载trojan二进制文件..."
-			curl -L -k -s -o /tmp/trojan --connect-timeout 15 --retry 3 https://cdn.jsdelivr.net/gh/eprea/cdn/trojan
+			wget -O /tmp/trojan -T 15 -t 3 https://cdn.jsdelivr.net/gh/eprea/cdn/trojan
 			if [ ! -f "/tmp/trojan" ]; then
 				logger -t "SS" "trojan二进制文件下载失败，可能是地址失效或者网络异常！准备切换备用下载地址！"
 				sleep 30
-				#curl -L -k -s -o /tmp/trojan --connect-timeout 10 --retry 3 https://bin.wololo.vercel.app/trojan
-				curl -L -k -s -o /tmp/trojan --connect-timeout 30 --retry 3 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/trojan
+				#wget -O /tmp/trojan -T 15 -t 3 https://bin.wololo.vercel.app/trojan
+				wget -O /tmp/trojan -t 3 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/trojan
 				if [ ! -f "/tmp/trojan" ]; then
 					logger -t "SS" "trojan二进制文件备用地址下载失败！请自查网络！"
 					nvram set ss_enable=0
@@ -119,12 +119,12 @@ local type=$stype
 		if [ ! -f "$v2_bin" ]; then
 		if [ ! -f "/tmp/v2ray" ]; then
 		    logger -t "SS" "开始下载v2ray二进制文件..."
-			curl -skL -o /tmp/v2ray --connect-timeout 15 --retry 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
+			wget -O /tmp/v2ray -T 20 -t 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
 			if [ ! -f "/tmp/v2ray" ]; then
 				logger -t "SS" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！准备切换备用下载地址！"
 				sleep 30
-				curl -skL -o /tmp/v2ray --connect-timeout 20 --retry 3 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/xray
-				[ $? != 0 ] && curl -skL -o /tmp/v2ray --connect-timeout 20 --retry 3 https://raw.fastgit.org/xumng123/rt-n56u/master/trunk/user/v2ray/v2ray
+				wget -O /tmp/v2ray -t 2 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/xray
+				[ $? != 0 ] && wget -O /tmp/v2ray -t 3 https://raw.fastgit.org/xumng123/rt-n56u/master/trunk/user/v2ray/v2ray
 				if [ ! -f "/tmp/v2ray" ]; then
 					logger -t "SS" "v2ray二进制文件备用地址下载失败！请自查网络！"
 					nvram set ss_enable=0
@@ -157,11 +157,11 @@ local type=$stype
 		if [ ! -f "$v2_bin" ]; then
 		if [ ! -f "/tmp/v2ray" ]; then
 		    logger -t "SS" "开始下载xray二进制文件..."
-			curl -L -k -s -o /tmp/v2ray --connect-timeout 15 --retry 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
+			wget -O /tmp/v2ray -T 20 -t 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
 			if [ ! -f "/tmp/v2ray" ]; then
 				logger -t "SS" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！准备切换备用下载地址！"
 				sleep 30
-				curl -L -k -s -o /tmp/v2ray --connect-timeout 20 --retry 3 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/xray
+				wget -O /tmp/v2ray -t 3 https://ghproxy.com/https://github.com/eprea/cdn/blob/master/xray
 				if [ ! -f "/tmp/v2ray" ]; then
 					logger -t "SS" "v2ray二进制文件备用地址下载失败！请自查网络！"
 					nvram set ss_enable=0
@@ -434,7 +434,7 @@ EOF
 
 start_AD() {
 	mkdir -p /tmp/dnsmasq.dom
-	curl -k -s -o /tmp/adnew.conf --connect-timeout 10 --retry 3 $(nvram get ss_adblock_url)
+	/usr/bin/curl -k -s -o /tmp/adnew.conf --connect-timeout 10 --retry 3 $(nvram get ss_adblock_url)
 	if [ ! -f "/tmp/adnew.conf" ]; then
 		logger -t "SS" "AD文件下载失败，可能是地址失效或者网络异常！"
 	else
