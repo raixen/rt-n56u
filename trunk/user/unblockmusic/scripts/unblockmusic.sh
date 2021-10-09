@@ -131,6 +131,11 @@ wyy_start()
   fi
   if [ "$APPTYPE" == "go" ]; then
     if [ ! -f $UnblockMusicGo ] ;then
+    logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic GolangVersion ..."
+    wget -P "$UnblockMusicGo" https://raw.fastgit.org/eprea/cdn/master/UnblockNeteaseMusic
+    [ $? != 0 ] && wget -P "$UnblockMusicGo" https://ghproxy.com/https://github.com/eprea/cdn/raw/master/UnblockNeteaseMusic
+    fi
+    if [ ! -f $UnblockMusicGo ] ;then
         Latest_releases=`curl -skL https://api.github.com/repos/cnsilvan/UnblockNeteaseMusic/releases/latest --connect-timeout 8 2>/dev/null|grep 'browser_download_url' |grep linux-mipsle.zip |awk -F"github.com" '{print $NF}'|sed s/\"//`
         [ "$Latest_releases" == "" ] && Latest_releases="/cnsilvan/UnblockNeteaseMusic/releases/download/0.2.12/UnblockNeteaseMusic-linux-mipsle.zip"
         Download_URL1="https://hub.fastgit.org${Latest_releases}"
@@ -140,12 +145,13 @@ wyy_start()
         wget -P /tmp/UnblockMusicGo $Download_URL1
         [ $? != 0 ] && wget -P /tmp/UnblockMusicGo $Download_URL2
         unzip -d /tmp/UnblockMusicGo /tmp/UnblockMusicGo/UnblockNeteaseMusic-linux-mipsle.zip
-        mv /tmp/UnblockMusicGo/UnblockNeteaseMusic $UnblockMusicGo; chmod +x $UnblockMusicGo; rm -rf /tmp/UnblockMusicGo
+        mv /tmp/UnblockMusicGo/UnblockNeteaseMusic $UnblockMusicGo; rm -rf /tmp/UnblockMusicGo
         [ ! -f $UnblockMusicGo ] && logger -t "音乐解锁" "下载失败，请稍后再试！"
     fi
 	if [ $FLAC -eq 1 ]; then
         ENABLE_FLAC="-b "
     fi
+    chmod +x $UnblockMusicGo
     $UnblockMusicGo $ENABLE_FLAC -p 5200 -sp 5201 -m 0 -c /etc_ro/UnblockNeteaseMusicGo/server.crt -k /etc_ro/UnblockNeteaseMusicGo/server.key -m 0 -e >/dev/null 2>&1 &
     logger -t "音乐解锁" "启动 GolangVersion (http:5200, https:5201)"
   else
@@ -178,7 +184,8 @@ stop)
 	wyy_close
 	;;
 restart)
-	wyy_close &>/dev/null
+	kill -9 $(busybox ps -w | grep UnblockNeteaseMusic | grep -v grep | awk '{print $1}') &>/dev/null
+	kill -9 $(busybox ps -w | grep logcheck.sh | grep -v grep | awk '{print $1}') &>/dev/null
 	wyy_start
 	;;
 *)
