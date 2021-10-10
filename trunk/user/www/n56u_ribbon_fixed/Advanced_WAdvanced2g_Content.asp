@@ -183,8 +183,8 @@ function done_validating(action){
                                             <td>
                                                 <select name="rt_stream_tx" class="input">
                                                     <option value="1" <% nvram_match_x("", "rt_stream_tx", "1", "selected"); %>>1T (150Mbps)</option>
-                                                    <option value="2" <% nvram_match_x("", "rt_stream_tx", "2", "selected"); %>>2T (300Mbps)</option>
-                                                    <option value="3" <% nvram_match_x("", "rt_stream_tx", "3", "selected"); %>>3T (450Mbps)</option>
+                                                    <option value="2" <% nvram_match_x("", "rt_stream_tx", "2", "selected"); %>>2T (433Mbps)</option>
+                                                    <option value="3" <% nvram_match_x("", "rt_stream_tx", "3", "selected"); %>>3T (490Mbps)</option>
                                                     <option value="4" <% nvram_match_x("", "rt_stream_tx", "4", "selected"); %>>4T (600Mbps)</option>
                                                 </select>
                                             </td>
@@ -194,8 +194,8 @@ function done_validating(action){
                                             <td>
                                                 <select name="rt_stream_rx" class="input">
                                                     <option value="1" <% nvram_match_x("", "rt_stream_rx", "1", "selected"); %>>1R (150Mbps)</option>
-                                                    <option value="2" <% nvram_match_x("", "rt_stream_rx", "2", "selected"); %>>2R (300Mbps)</option>
-                                                    <option value="3" <% nvram_match_x("", "rt_stream_rx", "3", "selected"); %>>3R (450Mbps)</option>
+                                                    <option value="2" <% nvram_match_x("", "rt_stream_rx", "2", "selected"); %>>2R (433Mbps)</option>
+                                                    <option value="3" <% nvram_match_x("", "rt_stream_rx", "3", "selected"); %>>3R (490Mbps)</option>
                                                     <option value="4" <% nvram_match_x("", "rt_stream_rx", "4", "selected"); %>>4R (600Mbps)</option>
                                                 </select>
                                             </td>
