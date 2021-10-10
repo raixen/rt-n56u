@@ -132,8 +132,8 @@ wyy_start()
   if [ "$APPTYPE" == "go" ]; then
     if [ ! -f $UnblockMusicGo ] ;then
     logger -t "音乐解锁" "正在下载 UnblockNeteaseMusic GolangVersion ..."
-    wget -P /tmp/UnblockMusicGo https://raw.fastgit.org/eprea/cdn/master/UnblockNeteaseMusic
-    [ $? != 0 ] && sleep 20 && wget -P /tmp/UnblockMusicGo https://ghproxy.com/https://github.com/eprea/cdn/raw/master/UnblockNeteaseMusic
+    wget -c -O /tmp/UnblockNeteaseMusic https://raw.fastgit.org/eprea/cdn/master/UnblockNeteaseMusic
+    [ $? != 0 ] && sleep 20 && wget -c -O /tmp/UnblockNeteaseMusic https://ghproxy.com/https://github.com/eprea/cdn/raw/master/UnblockNeteaseMusic
     fi
     if [ ! -f $UnblockMusicGo ] ;then
         Latest_releases=`curl -skL https://api.github.com/repos/cnsilvan/UnblockNeteaseMusic/releases/latest --connect-timeout 8 2>/dev/null|grep 'browser_download_url' |grep linux-mipsle.zip |awk -F"github.com" '{print $NF}'|sed s/\"//`
@@ -142,8 +142,8 @@ wyy_start()
         Download_URL2="https://github.com${Latest_releases}"
         mkdir -p /tmp/UnblockMusicGo
         logger -t "音乐解锁" "正在下载2 UnblockNeteaseMusic GolangVersion ..."
-        wget -P /tmp/UnblockMusicGo $Download_URL1
-        [ $? != 0 ] && wget -P /tmp/UnblockMusicGo $Download_URL2
+        wget -c -P /tmp/UnblockMusicGo $Download_URL1
+        [ $? != 0 ] && wget -c -P /tmp/UnblockMusicGo $Download_URL2
         unzip -d /tmp/UnblockMusicGo /tmp/UnblockMusicGo/UnblockNeteaseMusic-linux-mipsle.zip
         mv /tmp/UnblockMusicGo/UnblockNeteaseMusic $UnblockMusicGo; rm -rf /tmp/UnblockMusicGo
         [ ! -f $UnblockMusicGo ] && logger -t "音乐解锁" "下载失败，请稍后再试！"
