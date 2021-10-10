@@ -1,11 +1,10 @@
-﻿#!/bin/sh
+#!/bin/sh
 #from aaron
 killall npc
-mkdir -p /tmp/npc
 tmpconf="/tmp/npc/npc.conf"
 LOGFILE="/tmp/npc.log"
 
-if [ -f $tmpconf ] ; then 
+if [ -f $tmpconf ] ; then
 	rm $tmpconf
 fi
 
@@ -39,19 +38,31 @@ fi
 if [ "$npc_enable" = "1" ] ; then
 	npc_bin="/usr/bin/npc"
 	if [ ! -f "$npc_bin" ]; then
-		if [ ! -f "/tmp/npc/npc" ];then
-			wget -c -P /tmp/npc https://github.com/etion2008/aaron/raw/main/npc/npc
-			if [ ! -f "/tmp/npc/npc" ]; then
-				logger -t "NPC" "npc二进制文件下载失败，可能是地址失效或者网络异常！"
+		if [ ! -f "/tmp/npc" ];then
+		    logger -t "NPC" "开始下载npc二进制文件..."
+			wget -c -O /tmp/npc https://raw.fastgit.org/etion2008/aaron/main/npc/npc
+			[ $? != 0 ] && sleep 20 && wget -c -O /tmp/npc https://github.com/etion2008/aaron/raw/main/npc/npc
+			if [ ! -f "/tmp/npc" ] ;then
+			    Latest_releases=`curl -skL https://api.github.com/repos/ehang-io/nps/releases/latest --connect-timeout 8 2>/dev/null |grep linux_mipsle_client.tar.gz |grep 'browser_download_url' |awk -F"github.com" '{print $NF}'|sed s/\"//`
+			    Download_URL1="https://hub.fastgit.org${Latest_releases}"
+			    Download_URL2="https://github.com${Latest_releases}"
+			    logger -t "NPC" "开始下载npc最新版二进制文件..."
+			    mkdir -p /tmp/NPC; wget -c -P /tmp/NPC $Download_URL1
+			    [ $? != 0 ] && wget -c -P /tmp/npc $Download_URL2
+			    tar -xzf /tmp/NPC/linux_mipsle_client.tar.gz -C /tmp/NPC/
+			    \mv /tmp/NPC/npc /tmp/npc; rm -rf /tmp/NPC/
+            fi
+			if [ ! -f "/tmp/npc" ]; then
+				logger -t "NPC" "npc二进制文件下载失败，可能是地址失效或者网络异常！请稍后再试"
 				nvram set npc_enable=0
 				npc_close
 			else
 				logger -t "NPC" "npc二进制文件下载成功"
-				chmod -R 777 /tmp/npc/npc
-				npc_bin="/tmp/npc/npc"
+				chmod -R 777 /tmp/npc
+				npc_bin="/tmp/npc"
 			fi
 		else
-			npc_bin="/tmp/npc/npc"
+			npc_bin="/tmp/npc"
 		fi
 	fi
 
