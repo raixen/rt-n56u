@@ -570,7 +570,7 @@ if rules; then
 # ================================= 关闭SS ===============================
 
 ssp_close() {
-	rm -rf /tmp/cdn;rm -rf /tmp/v2ray;rm -f /tmp/ssrplus.log
+	[ -z `nvram get d_type` ] && rm -rf /tmp/v2ray /tmp/cdn /tmp/ssrplus.log
 	/usr/bin/ss-rules -f
 	kill -9 $(ps | grep ssr-switch | grep -v grep | awk '{print $1}') >/dev/null 2>&1
 	kill -9 $(ps | grep ssr-monitor | grep -v grep | awk '{print $1}') >/dev/null 2>&1
