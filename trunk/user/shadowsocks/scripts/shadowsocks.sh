@@ -197,10 +197,12 @@ get_arg_out() {
 start_rules() {
     logger -t "SS" "正在添加防火墙规则..."
     if [[ `nvram get d_type` == "v2ray" || `nvram get d_type` == "xray" ]]; then
-        logger -t "SS" "开始下载v2ray二进制文件..."
-        [ ! -f "$v2_bin" ] && wget -c -O /tmp/v2ray https://raw.fastgit.org/hiboyhiboy/opt-file/master/v2ray
-        [ $? != "0" ] && wget -c -O /tmp/v2ray -t 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
-        chmod +x /tmp/v2ray &>/dev/null
+        if [ ! -f "$v2_bin" ];then
+            logger -t "SS" "开始下载v2ray二进制文件..."
+            wget -c -O /tmp/v2ray https://raw.fastgit.org/hiboyhiboy/opt-file/master/v2ray
+            [ $? != "0" ] && wget -c -O /tmp/v2ray -t 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
+            chmod +x /tmp/v2ray &>/dev/null
+        fi
     fi
 	lua /etc_ro/ss/getconfig.lua $GLOBAL_SERVER > /tmp/server.txt
 	server=`cat /tmp/server.txt`
@@ -331,9 +333,13 @@ start_redir_tcp() {
 
 start_redir_udp() {
 	if [ "$UDP_RELAY_SERVER" != "nil" ]; then
+	    if [ `nvram get ud_type` == "" ]; then
+	        exit
+	    else
+	        utype=$(nvram get ud_type)
+	    fi
 		redir_udp=1
 		logger -t "SS" "启动$utype游戏UDP中继服务器"
-		utype=$(nvram get ud_type)
 		local bin=$(find_bin $utype)
 		[ ! -f "$bin" ] && echo "$(date "+%Y-%m-%d %H:%M:%S") UDP TPROXY Relay:Can't find $bin program, can't start!" >>/tmp/ssrplus.log && return 1
 		case "$utype" in
@@ -429,7 +435,7 @@ EOF
 		ipset add ss_spec_wan_ac $dnsserver 2>/dev/null
 	;;
 	esac
-	/sbin/restart_dhcpd
+	/sbin/restart_dhcpd >/dev/null
 }
 
 start_AD() {
@@ -454,6 +460,7 @@ start_AD() {
 
 # ================================= 启动 Socks5代理 ===============================
 start_local() {
+    [ `nvram get socks5_enable` == "" ] && exit
 	local s5_port=$(nvram get socks5_port)
 	local local_server=$(nvram get socks5_enable)
 	[ "$local_server" == "nil" ] && return 1
@@ -563,7 +570,7 @@ if rules; then
 # ================================= 关闭SS ===============================
 
 ssp_close() {
-	rm -rf /tmp/cdn
+	rm -rf /tmp/cdn;rm -rf /tmp/v2ray;rm -f /tmp/ssrplus.log
 	/usr/bin/ss-rules -f
 	kill -9 $(ps | grep ssr-switch | grep -v grep | awk '{print $1}') >/dev/null 2>&1
 	kill -9 $(ps | grep ssr-monitor | grep -v grep | awk '{print $1}') >/dev/null 2>&1
@@ -577,7 +584,7 @@ ssp_close() {
 		rm -f /etc/storage/dnsmasq-ss.d
 	fi
 	clear_iptable
-	/sbin/restart_dhcpd
+	/sbin/restart_dhcpd >/dev/null
 }
 
 
