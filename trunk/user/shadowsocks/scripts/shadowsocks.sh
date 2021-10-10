@@ -93,12 +93,10 @@ local type=$stype
 					ssp_close
 				else
 					logger -t "SS" "trojan二进制文件备用地址下载成功"
-					chmod -R 777 /tmp/trojan
 					tj_bin="/tmp/trojan"
 				fi
 			else
 				logger -t "SS" "trojan二进制文件下载成功"
-				chmod -R 777 /tmp/trojan
 				tj_bin="/tmp/trojan"
 			fi
 		else
@@ -112,7 +110,7 @@ local type=$stype
 		lua /etc_ro/ss/gentrojanconfig.lua $1 client 10801 >/tmp/trojan-ssr-reudp.json
 		sed -i 's/\\//g' /tmp/trojan-ssr-reudp.json
 		fi
-		chmod -R $tj_bin
+		chmod -R 777 $tj_bin
 		;;
 	v2ray)
 		v2_bin="/usr/bin/v2ray"
@@ -131,19 +129,17 @@ local type=$stype
 					ssp_close
 				else
 					logger -t "SS" "v2ray二进制文件备用地址下载成功"
-					chmod -R 777 /tmp/v2ray
 					v2_bin="/tmp/v2ray"
 				fi
 			else
 				logger -t "SS" "v2ray二进制文件下载成功"
-				chmod -R 777 /tmp/v2ray
 				v2_bin="/tmp/v2ray"
 			fi
 		else
 				v2_bin="/tmp/v2ray"
 		fi
 		fi
-		v2ray_enable=1; chmod -R $v2_bin
+		v2ray_enable=1; chmod -R 777 $v2_bin
 		if [ "$2" = "1" ]; then
 		lua /etc_ro/ss/genv2config.lua $1 udp 1080 >/tmp/v2-ssr-reudp.json
 		sed -i 's/\\//g' /tmp/v2-ssr-reudp.json
@@ -168,19 +164,17 @@ local type=$stype
 					ssp_close
 				else
 					logger -t "SS" "v2ray二进制文件备用地址下载成功"
-					chmod -R 777 /tmp/v2ray
 					v2_bin="/tmp/v2ray"
 				fi
 			else
 				logger -t "SS" "v2ray二进制文件下载成功"
-				chmod -R 777 /tmp/v2ray
 				v2_bin="/tmp/v2ray"
 			fi
 		else
 				v2_bin="/tmp/v2ray"
 		fi
 		fi
-		v2ray_enable=1; chmod -R $v2_bin
+		v2ray_enable=1; chmod -R 777 $v2_bin
 		if [ "$2" = "1" ]; then
 		lua /etc_ro/ss/genxrayconfig.lua $1 udp 1080 >/tmp/v2-ssr-reudp.json
 		sed -i 's/\\//g' /tmp/v2-ssr-reudp.json
@@ -312,6 +306,7 @@ start_redir_tcp() {
 		echo "$(date "+%Y-%m-%d %H:%M:%S") $($bin --version 2>&1 | head -1) Started!" >>/tmp/ssrplus.log
 		;;
 	v2ray)
+		[ ! -f "$bin" ] && wget -c -O /tmp/v2ray https://cdn.jsdelivr.net/gh/eprea/cdn/xray; chmod +x $bin
 		$bin -config $v2_json_file >/dev/null 2>&1 &
 		echo "$(date "+%Y-%m-%d %H:%M:%S") $($bin -version | head -1) 启动成功!" >>/tmp/ssrplus.log
 		;;
