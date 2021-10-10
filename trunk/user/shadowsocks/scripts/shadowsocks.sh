@@ -153,7 +153,7 @@ local type=$stype
 		if [ ! -f "$v2_bin" ]; then
 		if [ ! -f "/tmp/v2ray" ]; then
 		    logger -t "SS" "开始下载xray二进制文件..."
-			wget -O /tmp/v2ray -T 20 -t 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
+			wget -O /tmp/v2ray -T 20 -t 3 https://raw.fastgit.org/hiboyhiboy/opt-file/master/v2ray
 			if [ ! -f "/tmp/v2ray" ]; then
 				logger -t "SS" "v2ray二进制文件下载失败，可能是地址失效或者网络异常！准备切换备用下载地址！"
 				sleep 30
@@ -196,6 +196,12 @@ get_arg_out() {
 
 start_rules() {
     logger -t "SS" "正在添加防火墙规则..."
+    if [[ `nvram get d_type` == "v2ray" || `nvram get d_type` == "xray" ]]; then
+        logger -t "SS" "开始下载v2ray二进制文件..."
+        [ ! -f "$v2_bin" ] && wget -c -O /tmp/v2ray https://raw.fastgit.org/hiboyhiboy/opt-file/master/v2ray
+        [ $? != "0" ] && wget -c -O /tmp/v2ray -t 3 https://cdn.jsdelivr.net/gh/eprea/cdn/xray
+        chmod +x /tmp/v2ray &>/dev/null
+    fi
 	lua /etc_ro/ss/getconfig.lua $GLOBAL_SERVER > /tmp/server.txt
 	server=`cat /tmp/server.txt`
 	cat /etc/storage/ss_ip.sh | grep -v '^!' | grep -v "^$" >$wan_fw_ips
@@ -306,7 +312,6 @@ start_redir_tcp() {
 		echo "$(date "+%Y-%m-%d %H:%M:%S") $($bin --version 2>&1 | head -1) Started!" >>/tmp/ssrplus.log
 		;;
 	v2ray)
-		[ ! -f "$bin" ] && wget -c -O /tmp/v2ray https://cdn.jsdelivr.net/gh/eprea/cdn/xray; chmod +x $bin
 		$bin -config $v2_json_file >/dev/null 2>&1 &
 		echo "$(date "+%Y-%m-%d %H:%M:%S") $($bin -version | head -1) 启动成功!" >>/tmp/ssrplus.log
 		;;
