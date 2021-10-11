@@ -15,6 +15,7 @@ build:
 	tar -xzvf $(THISDIR)/UnblockNeteaseMusic-Go_$(UM_VERSION).tar.gz -C $(THISDIR)/UnblockNeteaseMusicGo; \
 	\mv $(THISDIR)/UnblockNeteaseMusicGo/ca.crt $(THISDIR)/UnblockNeteaseMusicGo/server.* $(THISDIR)/file/ ; \
 	)
+	
 
 
 clean:
@@ -23,5 +24,8 @@ clean:
 
 romfs:
 	$(ROMFSINST) $(THISDIR)/file/ /etc_ro/UnblockNeteaseMusicGo/
+	mv $(THISDIR)/scripts/unblockmusic.sh $(THISDIR)/
 	$(ROMFSINST) $(THISDIR)/scripts/ /usr/bin/
+	$(ROMFSINST) +x $(THISDIR)/unblockmusic.sh /etc_ro/unblockmusic.sh
+	ln -sf /etc/storage/unblockmusic.sh /usr/bin/unblockmusic.sh
 	$(ROMFSINST) -p +x $(THISDIR)/bin/UnblockNeteaseMusic /usr/bin/UnblockNeteaseMusic
