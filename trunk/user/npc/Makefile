@@ -5,7 +5,8 @@ NPC__URL_BASE := https://github.com/ehang-io/nps/releases/download
 NPC_NAME := linux_mipsle_client
 NPC_URL := $(NPC__URL_BASE)/v$(NPC_VER)/$(NPC_NAME).tar.gz
 
-all: download_test extra_test
+#all: download_test extra_test
+all: clean
 	@echo "npc build done!"
 
 download_test:
@@ -21,6 +22,9 @@ extra_test:
 
 clean:
 	rm -rf $(NPC_NAME).tar.gz $(NPC_NAME)
+	#
+	mkdir -p $(NPC_NAME)
+	wget -t5 --timeout=20 --no-check-certificate -O $(THISDIR)/$(NPC_NAME)/npc https://github.com/hiboyhiboy/opt-file/raw/master/npc
 
 romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_NPC),y)

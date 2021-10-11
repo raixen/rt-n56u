@@ -36,12 +36,12 @@ else
 fi
 
 if [ "$npc_enable" = "1" ] ; then
-	npc_bin="/usr/bin/npc"
+	npc_bin="/usr/bin/npc"  #需要使用外部版本可删除此路径
 	if [ ! -f "$npc_bin" ]; then
 		if [ ! -f "/tmp/npc" ];then
 		    logger -t "NPC" "开始下载npc二进制文件..."
 			wget -c -O /tmp/npc https://raw.fastgit.org/etion2008/aaron/main/npc/npc
-			[ $? != 0 ] && sleep 20 && wget -c -O /tmp/npc https://github.com/etion2008/aaron/raw/main/npc/npc
+			[ $? != 0 ] && sleep 10 && wget -c -O /tmp/npc https://raw.fastgit.org/hiboyhiboy/opt-file/master/npc
 			if [ ! -f "/tmp/npc" ] ;then
 			    Latest_releases=`curl -skL https://api.github.com/repos/ehang-io/nps/releases/latest --connect-timeout 8 2>/dev/null |grep linux_mipsle_client.tar.gz |grep 'browser_download_url' |awk -F"github.com" '{print $NF}'|sed s/\"//`
 			    Download_URL1="https://hub.fastgit.org${Latest_releases}"
