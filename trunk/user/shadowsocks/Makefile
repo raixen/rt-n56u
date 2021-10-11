@@ -91,7 +91,7 @@ clean_ss:
 		$(MAKE) -C $(SRC_SS_NAME) distclean ; \
 	fi )
 
-romfs_old:
+old_romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SSR_NAME)/src/ss-redir /usr/bin/ssr-redir
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_SSR_NAME)/src/ss-local /usr/bin/ssr-local
@@ -122,15 +122,17 @@ endif
 
 romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
-	chmod -R +x scripts/
-	mv scripts/*.sh $(THISDIR)/
-	$(ROMFSINST) +x $(THISDIR)/scripts/ /usr/bin/
-	$(ROMFSINST) +x $(THISDIR)/shadowsocks.sh /etc_ro/
-	$(ROMFSINST) +x $(THISDIR)/update_*.sh /etc_ro/
-	ln -sf /etc/storage/shadowsocks.sh /usr/bin/shadowsocks.sh
-	ln -sf /etc/storage/update_chnroute.sh /usr/bin/update_chnroute.sh
-	ln -sf /etc/storage/update_dlink.sh /usr/bin/update_dlink.sh
-	ln -sf /etc/storage/update_gfwlist.sh /usr/bin/update_gfwlist.sh
+	chmod -R +x $(THISDIR)/scripts/
+	mv $(THISDIR)/scripts/*.sh $(THISDIR)/
+	$(ROMFSINST) $(THISDIR)/scripts/ /usr/bin/
+	$(ROMFSINST) $(THISDIR)/shadowsocks.sh /etc_ro/shadowsocks.sh
+	$(ROMFSINST) $(THISDIR)/update_chnroute.sh /etc_ro/update_chnroute.sh
+	$(ROMFSINST) $(THISDIR)/update_dlink.sh /etc_ro/update_dlink.sh
+	$(ROMFSINST) $(THISDIR)/update_gfwlist.sh /etc_ro/update_gfwlist.sh
+	ln -sf ../../etc/storage/shadowsocks.sh $(ROMFSDIR)/usr/bin/shadowsocks.sh
+	ln -sf ../../etc/storage/update_chnroute.sh $(ROMFSDIR)/usr/bin/update_chnroute.sh
+	ln -sf ../../etc/storage/update_dlink.sh $(ROMFSDIR)/usr/bin/update_dlink.sh
+	ln -sf ../../etc/storage/update_gfwlist.sh $(ROMFSDIR)/usr/bin/update_gfwlist.sh
 	#$(ROMFSINST) $(THISDIR)/gfwlist/gfwlist.bz2 /etc_ro/gfwlist.bz2
 	$(ROMFSINST) $(THISDIR)/oversea/oversea_list.conf /etc_ro/oversea_list.conf
 	$(ROMFSINST) $(THISDIR)/gfwlist/gfwlist_list.conf /etc_ro/gfwlist_list.conf
