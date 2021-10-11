@@ -69,6 +69,26 @@ if [ ! -f "/etc/storage/adbyby_rules.sh" ] ; then
 cp -rf /etc_ro/adbyby_rules.sh /etc/storage/
 chmod 755 "/etc/storage/adbyby_rules.sh"
 fi
+if [ ! -f "/etc/storage/unblockmusic.sh" ] ; then
+cp -rf /etc_ro/unblockmusic.sh /etc/storage/
+chmod 755 "/etc/storage/unblockmusic.sh"
+fi
+if [ ! -f "/etc/storage/shadowsocks.sh" ] ; then
+cp -rf /etc_ro/shadowsocks.sh /etc/storage/
+chmod 755 "/etc/storage/shadowsocks.sh"
+fi
+if [ ! -f "/etc/storage/update_chnroute.sh" ] ; then
+cp -rf /etc_ro/update_chnroute.sh /etc/storage/
+chmod 755 "/etc/storage/update_chnroute.sh"
+fi
+if [ ! -f "/etc/storage/update_dlink.sh" ] ; then
+cp -rf /etc_ro/update_dlink.sh /etc/storage/
+chmod 755 "/etc/storage/update_dlink.sh"
+fi
+if [ ! -f "/etc/storage/update_gfwlist.sh" ] ; then
+cp -rf /etc_ro/update_gfwlist.sh /etc/storage/
+chmod 755 "/etc/storage/update_gfwlist.sh"
+fi
 if [ ! -f "/etc/storage/ss_dlink.sh" ] ; then
 cp -rf /etc_ro/ss_dlink.sh /etc/storage/
 chmod 755 "/etc/storage/ss_dlink.sh"
