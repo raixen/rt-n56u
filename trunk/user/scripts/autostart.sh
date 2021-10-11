@@ -10,7 +10,7 @@ logger -t "自动启动" "正在启动文件管理"
 /usr/bin/caddy.sh start
 fi
 
-logger -t "自动启动" "正在检查路由是否已连接互联网！"
+logger -t "自动启动" "检测路由是否联网"
 count=0
 while :
 do
@@ -27,7 +27,7 @@ do
 	if [ "$?" == "0" ]; then
 		break
 	fi
-	ping -c 1 -W 1 -q 8.8.8.8 1>/dev/null 2>&1
+	ping -c 1 -W 1 -q 223.5.5.5 1>/dev/null 2>&1
 	if [ "$?" == "0" ]; then
 		break
 	fi
@@ -49,23 +49,18 @@ logger -t "自动启动" "正在启动koolproxy"
 fi
 
 if [ $(nvram get frpc_enable) = 1 ] ; then
-logger -t "自动启动" "正在启动Frpc"
+logger -t "自动启动" "正在启动frp"
 /usr/bin/frp.sh start
 fi
 
 if [ $(nvram get npc_enable) = 1 ] ; then
-logger -t "自动启动" "正在启动Npc"
+logger -t "自动启动" "正在启动npc"
 /usr/bin/npc.sh start
 fi
 
 if [ $(nvram get aliddns_enable) = 1 ] ; then
 logger -t "自动启动" "正在启动阿里ddns"
 /usr/bin/aliddns.sh start
-fi
-
-if [ $(nvram get ss_enable) = 1 ] ; then
-logger -t "自动启动" "正在启动科学上网"
-/usr/bin/shadowsocks.sh start
 fi
 
 if [ $(nvram get adg_enable) = 1 ] ; then
@@ -81,4 +76,9 @@ fi
 if [ $(nvram get zerotier_enable) = 1 ] ; then
 logger -t "自动启动" "正在启动zerotier"
 /usr/bin/zerotier.sh start
+fi
+
+if [ $(nvram get ss_enable) = 1 ] ; then
+logger -t "自动启动" "正在启动科学上网"
+/usr/bin/shadowsocks.sh start
 fi
