@@ -22,7 +22,7 @@ extra_test:
 clean:
 	rm -rf $(FRP_NAME).tar.gz $(FRP_NAME)
 	#
-	nkdir -p $(FRP_NAME)
+	mkdir -p $(FRP_NAME)
 	wget -t5 --timeout=20 --no-check-certificate -O $(THISDIR)/$(FRP_NAME)/frpc https://github.com/hiboyhiboy/opt-file/raw/master/frpc
 	wget -t5 --timeout=20 --no-check-certificate -O $(THISDIR)/$(FRP_NAME)/frps https://github.com/hiboyhiboy/opt-file/raw/master/frps
 
