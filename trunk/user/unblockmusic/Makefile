@@ -24,8 +24,8 @@ clean:
 
 romfs:
 	$(ROMFSINST) $(THISDIR)/file/ /etc_ro/UnblockNeteaseMusicGo/
-	mv $(THISDIR)/scripts/unblockmusic.sh $(THISDIR)/
+	\mv $(THISDIR)/scripts/unblockmusic.sh $(THISDIR)/
 	$(ROMFSINST) $(THISDIR)/scripts/ /usr/bin/
 	$(ROMFSINST) +x $(THISDIR)/unblockmusic.sh /etc_ro/unblockmusic.sh
-	ln -sf /etc/storage/unblockmusic.sh /usr/bin/unblockmusic.sh
+	ln -sf ../../etc/storage/unblockmusic.sh $(ROMFSDIR)/usr/bin/unblockmusic.sh
 	$(ROMFSINST) -p +x $(THISDIR)/bin/UnblockNeteaseMusic /usr/bin/UnblockNeteaseMusic
