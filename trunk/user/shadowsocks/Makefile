@@ -8,18 +8,17 @@ ARCHIVE_SSR_NAME=shadowsocksr-libev-master-e2373d7
 #https://github.com/shadowsocksr-backup/shadowsocksr-libev.git
 
 
-#all: extract_test config_test
-all: clean_ss
+all: extract_test config_test
 
-#ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
-#	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SSR_NAME)
-#endif
-#	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SS_NAME)
-#ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
-#extract_test: extract_ssr_test extract_ss_test
-#else
-#extract_test: extract_ss_test
-#endif
+ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
+	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SSR_NAME)
+endif
+	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SS_NAME)
+ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
+extract_test: extract_ssr_test extract_ss_test
+else
+extract_test: extract_ss_test
+endif
 
 extract_ssr_test:
 	( if [ ! -d $(SRC_SSR_NAME) ]; then \
@@ -124,9 +123,9 @@ romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
     chmod -R +x $(THISDIR)/scripts/
     mv $(THISDIR)/scripts/*.sh $(THISDIR)/
-	$(ROMFSINST) $(THISDIR)/scripts/ /usr/bin/
-	$(ROMFSINST) $(THISDIR)/shadowsocks.sh /etc_ro/
-	$(ROMFSINST) $(THISDIR)/update_*.sh /etc_ro/
+	$(ROMFSINST) +x $(THISDIR)/scripts/ /usr/bin/
+	$(ROMFSINST) +x $(THISDIR)/shadowsocks.sh /etc_ro/
+	$(ROMFSINST) +x $(THISDIR)/update_*.sh /etc_ro/
 	ln -sf /etc/storage/shadowsocks.sh /usr/bin/shadowsocks.sh
 	ln -sf /etc/storage/update_chnroute.sh /usr/bin/update_chnroute.sh
 	ln -sf /etc/storage/update_dlink.sh /usr/bin/update_dlink.sh
