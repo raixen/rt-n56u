@@ -55,10 +55,10 @@ frpc_enable=`nvram get frpc_enable`
 frps_enable=`nvram get frps_enable`
 
 if [ "$frpc_enable" = "1" ] ; then
-	frpc_bin="/usr/bin/frpc"
+	frpc_bin="/usr/bin/frpc"  #需要使用外部版本可删除此路径
 	if [ ! -f "$frpc_bin" ]; then
 		if [ ! -f "/tmp/frp/frpc" ];then
-			wget -c -P /tmp/frp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frpc
+			wget -c -P /tmp/frp https://raw.fastgit.org/hiboyhiboy/opt-file/master/frpc0.25.0
 			#wget -c -P /tmp/frp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frpc
 			if [ ! -f "/tmp/frp/frpc" ]; then
 				logger -t "FRPC" "frpc二进制文件下载失败，可能是地址失效或者网络异常！"
@@ -78,10 +78,10 @@ if [ "$frpc_enable" = "1" ] ; then
 fi
 
 if [ "$frps_enable" = "1" ] ; then
-	frps_bin="/usr/bin/frps"
+	frps_bin="/usr/bin/frps"  #需要使用外部版本可删除此路径
 	if [ ! -f "$frps_bin" ]; then
 		if [ ! -f "/tmp/frp/frps" ];then
-			wget -c -P /tmp/frp https://raw.fastgit.org/etion2008/rt-n56u/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frps
+			wget -c -P /tmp/frp https://raw.fastgit.org/hiboyhiboy/opt-file/master/frps0.25.0
 			#wget -c -P /tmp/frp https://github.com/etion2008/rt-n56u/raw/master/trunk/user/frp/frp_0.29.0_linux_mipsle/frps
 			if [ ! -f "/tmp/frp/frps" ]; then
 				logger -t "FRPS" "frps二进制文件下载失败，可能是地址失效或者网络异常！"
@@ -99,4 +99,4 @@ if [ "$frps_enable" = "1" ] ; then
 
 	$frps_bin -c /tmp/frp/myfrps.ini 2>&1 &
 fi
- 
+

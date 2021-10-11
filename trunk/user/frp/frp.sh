@@ -3,7 +3,7 @@ frpc_enable=`nvram get frpc_enable`
 frps_enable=`nvram get frps_enable`
 http_username=`nvram get http_username`
 
-check_frp () 
+check_frp ()
 {
 	check_net
 	result_net=$?
@@ -16,22 +16,22 @@ check_frp ()
 		fi
 	else
 
-		logger -t "frp" "frp断线重连"
+		logger -t "frp" "frp断线重连..."
 	fi
 }
 
-check_net() 
+check_net()
 {
 	/bin/ping -c 3 www.baidu.com -w 5 >/dev/null 2>&1
 	if [ "$?" == "0" ]; then
 		return 1
 	else
 		return 2
-		logger -t "frp" "检测到互联网未能成功访问,稍后再尝试启动frp"
+		logger -t "frp" "未能成功访问到互联网,稍后再尝试启动frp"
 	fi
 }
 
-frp_start () 
+frp_start ()
 {
 	/etc/storage/frp_script.sh
 	sed -i '/frp/d' /etc/storage/cron/crontabs/$http_username
@@ -42,7 +42,7 @@ EOF
 	[ ! -z "`pidof frps`" ] && logger -t "frp" "frps启动成功"
 }
 
-frp_close () 
+frp_close ()
 {
 	if [ "$frpc_enable" = "0" ]; then
 		if [ ! -z "`pidof frpc`" ]; then

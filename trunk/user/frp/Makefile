@@ -5,7 +5,8 @@ FRP_URL_BASE := https://github.com/fatedier/frp/releases/download
 FRP_NAME := frp_$(FRP_VER)_linux_mipsle
 FRP_URL := $(FRP_URL_BASE)/v$(FRP_VER)/$(FRP_NAME).tar.gz
 
-all: download_test extra_test
+#all: download_test extra_test
+all: clean
 	@echo "frp build done!"
 
 download_test:
@@ -20,6 +21,10 @@ extra_test:
 
 clean:
 	rm -rf $(FRP_NAME).tar.gz $(FRP_NAME)
+	#
+	nkdir -p $(FRP_NAME)
+	wget -t5 --timeout=20 --no-check-certificate -O $(THISDIR)/$(FRP_NAME)/frpc https://github.com/hiboyhiboy/opt-file/raw/master/frpc
+	wget -t5 --timeout=20 --no-check-certificate -O $(THISDIR)/$(FRP_NAME)/frps https://github.com/hiboyhiboy/opt-file/raw/master/frps
 
 romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_FRPC),y)
