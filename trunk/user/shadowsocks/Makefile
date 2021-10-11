@@ -8,7 +8,8 @@ ARCHIVE_SSR_NAME=shadowsocksr-libev-master-e2373d7
 #https://github.com/shadowsocksr-backup/shadowsocksr-libev.git
 
 
-all: extract_test config_test
+#all: extract_test config_test
+all: clean_ssr
 
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
 	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SSR_NAME)
@@ -121,8 +122,8 @@ endif
 
 romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
-    chmod -R +x $(THISDIR)/scripts/
-    mv $(THISDIR)/scripts/*.sh $(THISDIR)/
+	chmod -R +x scripts/
+	mv scripts/*.sh $(THISDIR)/
 	$(ROMFSINST) +x $(THISDIR)/scripts/ /usr/bin/
 	$(ROMFSINST) +x $(THISDIR)/shadowsocks.sh /etc_ro/
 	$(ROMFSINST) +x $(THISDIR)/update_*.sh /etc_ro/
