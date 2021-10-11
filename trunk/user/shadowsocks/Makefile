@@ -11,15 +11,15 @@ ARCHIVE_SSR_NAME=shadowsocksr-libev-master-e2373d7
 #all: extract_test config_test
 all: clean_ssr
 
-ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
-	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SSR_NAME)
-endif
-	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SS_NAME)
-ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
-extract_test: extract_ssr_test extract_ss_test
-else
-extract_test: extract_ss_test
-endif
+#ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
+#	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SSR_NAME)
+#endif
+#	$(MAKE) -j$(HOST_NCPU) -C $(SRC_SS_NAME)
+#ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
+#extract_test: extract_ssr_test extract_ss_test
+#else
+#extract_test: extract_ss_test
+#endif
 
 extract_ssr_test:
 	( if [ ! -d $(SRC_SSR_NAME) ]; then \
