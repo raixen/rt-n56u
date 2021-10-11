@@ -10,7 +10,7 @@ logger -t "自动启动" "正在启动文件管理"
 /usr/bin/caddy.sh start
 fi
 
-logger -t "自动启动" "检测路由是否联网"
+logger -t "自动启动" "检测是否连接到互联网"
 count=0
 while :
 do
