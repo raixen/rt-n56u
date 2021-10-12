@@ -266,6 +266,9 @@ func_fill()
 #drop caches
 sync && echo 3 > /proc/sys/vm/drop_caches
 
+# AP mode extend IP address
+[ `nvram get sw_mode` == "3" ] && ifconfig br0:0 192.168.255.1 netmask 255.255.255.0 up
+
 # Roaming assistant for mt76xx WiFi
 #iwpriv ra0 set KickStaRssiLow=-85
 #iwpriv ra0 set AssocReqRssiThres=-80
