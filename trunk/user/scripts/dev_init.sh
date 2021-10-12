@@ -104,3 +104,10 @@ if [ -x /etc/storage/start_script.sh ] ; then
 	/etc/storage/start_script.sh
 fi
 
+# crontab manager
+[ `nvram get npc_enable` == "0" ] && sed -i /npc.sh/d /etc/storage/cron/crontabs/admin
+if [ `nvram get ss_enable` == "0" ]; then
+    sed -i /ss-watchcat.sh/d /etc/storage/cron/crontabs/admin
+    sed -i /update_chnroute.sh/d /etc/storage/cron/crontabs/admin
+    sed -i /update_gfwlist.sh/d /etc/storage/cron/crontabs/admin
+fi
